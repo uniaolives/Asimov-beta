@@ -1,0 +1,8 @@
+{
+  "name": "TIM-ML v3.3 | Resilient DVA Substrate",
+  "description": "Advanced DVA Substrate interface featuring distributed viability architecture, fluidic congestion detection, and adaptive resilience layers.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
