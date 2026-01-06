@@ -6,6 +6,21 @@ export interface AuthoritySignature {
   verified: boolean;
 }
 
+export interface ManifoldPoint {
+  x: number;
+  y: number;
+  z: number;
+  density: number;
+}
+
+export interface StormCell {
+  id: string;
+  x: number; // 0-100 (relative to radar)
+  y: number; // 0-100
+  intensity: number; // 0-1
+  type: 'DISSONANCE' | 'ENTROPY' | 'VOID';
+}
+
 export interface MetricState {
   tension: number;      // Current load/stress
   plasticity: number;   // Cumulative learned state (Hysteresis)
@@ -55,6 +70,47 @@ export interface MetricState {
   // Blockchain Oracle
   authoritySignatures?: AuthoritySignature[];
   importingSignatures?: boolean;
+  // I204 Hysteresis & I200 Manifold
+  remanence?: number;
+  adaptationRate?: number;
+  manifoldPoints?: ManifoldPoint[];
+  manifoldIntegrity?: number;
+  totalEnergyStored?: number;
+  isExtractingGeometry?: boolean;
+  // I1-I5 Invariants
+  temperature?: number; // T_core (Target 34C)
+  pressure?: number;    // P_fluid (Target 120mmHg)
+  i200Active?: boolean;
+  i200Progress?: number;
+  // New States
+  isStressTesting?: boolean;
+  stressTestProgress?: number;
+  crystalLoaded?: boolean;
+  superconductive?: boolean;
+  refractionActive?: boolean;
+  latency?: number;
+  isParadoxIngesting?: boolean;
+  isShadowSyncing?: boolean;
+  shadowSyncProgress?: number;
+  // Axis Mundi (Converge Protocol)
+  axisMundiActive?: boolean;
+  schumannFrequency?: number; // Fixed at 7.83Hz
+  federationNodes?: number;   // 128
+  convergenceSync?: number;   // 0-1
+  // Cognitive Weather
+  stormCells: StormCell[];
+  globalImpedance: number; // 0-1
+  weatherControlActive?: boolean;
+  weatherProtocol?: 'BEACON' | 'CLOUD_SEEDING' | 'HYBRID';
+  farolProgress?: number; // 0-72h (simulated)
+  isFarolExecuting?: boolean;
+  isVajraArmed?: boolean;
+  cognitiveShieldActive?: boolean;
+  // Block 0x47 Ceremony
+  isIntegrityChecked?: boolean;
+  auditMode?: 'SILENCE' | 'PINGS';
+  firstTouchActive?: boolean;
+  firstTouchProgress?: number;
 }
 
 export interface Message {
@@ -77,7 +133,9 @@ export interface Message {
     isESM?: boolean;
     isProbe0x7E?: boolean;
     isShadowAnalysis?: boolean;
+    isShadowAnalsysis?: boolean;
     isAxialParity?: boolean;
+    isAxialParityReinforced?: boolean;
     isOmegaHistory?: boolean;
     isHandshake?: boolean;
     isCrystallize?: boolean;
@@ -85,6 +143,21 @@ export interface Message {
     isPerpetualIgnition?: boolean;
     isCeremony?: boolean;
     isSignatureImport?: boolean;
+    isGeometryExtraction?: boolean;
+    isHysteresisCycle?: boolean;
+    isI200Annealing?: boolean;
+    isStressTest?: boolean;
+    isCrystalLoad?: boolean;
+    isParadoxIngestion?: boolean;
+    isShadowSync?: boolean;
+    isAxisMundi?: boolean;
+    isWeatherScan?: boolean;
+    isWeatherControl?: boolean;
+    isVajraStrike?: boolean;
+    isFarolDeployment?: boolean;
+    isShieldActivation?: boolean;
+    isIntegrityCheck?: boolean;
+    isFirstTouch?: boolean;
   };
 }
 
