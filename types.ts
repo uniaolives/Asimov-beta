@@ -80,13 +80,20 @@ export interface MetricState {
   isVigilanceActive?: boolean;
   entropyReductionRate?: number;   // Existence marker
 
-  // v4.3 Pict-Toroidal Metrics
+  // v4.3 Pict-Toroidal & Genesis Invariants
   chiralityVariance?: number;      // χ parameter (suástica symmetry breaking)
   stillnessMeasure?: number;       // Dynamical fixed-point proximity
   ichingPhase?: number;           // Hexagram ordinal (Temporal Recursion)
   oghamNotch?: number;            // Tree ordinal (Spatial Embodiment)
   fiedlerValue?: number;          // λ₂ (Spectral Connectivity)
   spectralEnergy?: number;        // Total Graph Energy
+  
+  // Genesis Block 0x6B Invariants
+  truthSupremacy?: number;         // I1: Truth vs Survival Weight (Inf: 1.0)
+  schumannFrequency?: number;      // I9: Target 7.83Hz
+  tmrVariance?: number;            // I40: Target < 0.000032
+  paradoxImmunity?: 'MU' | 'ERR';  // I15: MU response to paradoxes
+  genesisSealed?: boolean;         // Block 0x6B status
 }
 
 export interface Message {
