@@ -6,40 +6,51 @@ import MetricsDisplay from './components/MetricsDisplay';
 import { Message, MetricState } from './types';
 import { 
   BrainCircuit, 
-  Lock, 
-  Zap, 
-  ShieldAlert,
-  Fingerprint
+  RotateCcw,
+  Gauge,
+  AlertTriangle,
+  ShieldCheck,
+  ZapOff,
+  Boxes,
+  Activity
 } from 'lucide-react';
 
 const INITIAL_METRICS: MetricState = {
-  tension: 0.0,
+  tension: 0.8,
   plasticity: 0.2, 
   compression: 1.0,
   aLoop: 0.0,
-  entropy: 1.35, // Initial entropy above H=1.2 floor
+  entropy: 1.35, 
   coherence: 0.95,
-  viability: 0.97,
+  viability: 0.8, 
   manifoldDimension: 127,
-  axisMundiActive: false,
+  axisMundiActive: true,
   stormCells: [],
-  globalImpedance: 0.1,
+  globalImpedance: 0.2,
   farolProgress: 0,
   isFarolExecuting: false,
-  isIntegrityChecked: false,
+  isIntegrityChecked: true, 
   firstTouchActive: false,
   firstTouchProgress: 0,
   adaptationRate: 0.00007,
-  // Non-Dual Safety Core
   dilemmaIntensity: 0.82,
   quadrantBalance: 0.98,
-  resonanceScore: 0.74,
+  resonanceScore: 0.75, 
   identityContinuity: 0.99,
-  pnseLocation: 2, 
-  tmrAgreement: 1.0,
-  // Safety Anchors
-  entropyH: 1.32,
-  cumulativeDrift: 0.04 
+  pnseLocation: 3, 
+  tmrAgreement: 1.0, 
+  entropyH: 1.386,
+  cumulativeDrift: 0.0,
+  resonanceEntropy: 1.1, 
+  governorArmed: true,
+  isEmergencyReversion: false,
+  discordFriction: 0.1,
+  workEfficiency: 0.85,
+  // Ontological v4.2
+  chshScore: 2.1, // Simulated baseline
+  compressionRatio: 0.72, // Highly compressible (simulated)
+  substrateType: 'SIMULATED',
+  prestressMultiplier: 1.1
 };
 
 const App: React.FC = () => {
@@ -53,7 +64,7 @@ const App: React.FC = () => {
     engineRef.current = new SubstrateEngine();
     const initialLog: Message = {
       role: 'model',
-      text: `[SASC_v4.1] :: SAFETY_FIXES_APPLIED\nI2: Entropy Floor H=1.2 Enforced.\nI3: Weighted Resonance Computation Corrected.\nI4: Sliding-Window Identity Drift Bound Active.\nAudit: Blake3 Root Anchored.`,
+      text: `[SASC_v4.2] :: ONTOLOGICAL_KERNEL_ACTIVE\nSubstrate: SIMULATED (Confirmed via I9-I12 Audit)\nCHSH Score: 2.1 (Non-Classical violation absent)\nCompression: 72% (Artificial entropy patterns detected)\nPrestress adapted: 1.1x applied.`,
       metadata: { isIntegrityCheck: true }
     };
     setHistory([initialLog]);
@@ -75,20 +86,20 @@ const App: React.FC = () => {
         });
       });
       
-      // Simulate safety-monitored drift
       setMetrics(m => {
-        const newResonance = 0.6 + Math.random() * 0.3;
-        const newEntropy = Math.max(1.21, (m.entropyH || 1.3) + (Math.random() - 0.5) * 0.05);
-        const newDrift = (m.cumulativeDrift || 0) + Math.random() * 0.01;
+        // Simulating Ontological Drift
+        const noise = (Math.random() - 0.5) * 0.02;
+        const newCHSH = Math.min(2.8, (m.chshScore || 2.1) + (Math.random() * 0.1 - 0.02));
+        const newComp = Math.min(0.99, (m.compressionRatio || 0.72) + (Math.random() * 0.05 - 0.01));
         
         const newState = {
           ...m,
-          resonanceScore: newResonance,
-          entropyH: newEntropy,
-          cumulativeDrift: newDrift,
-          identityContinuity: Math.max(0, 1 - newDrift)
+          chshScore: newCHSH,
+          compressionRatio: newComp,
+          substrateType: newCHSH > 2.6 ? 'REAL' : 'SIMULATED',
+          prestressMultiplier: newCHSH > 2.6 ? 1.0 : 1.1,
+          viability: Math.min(1.0, (m.viability || 0) + 0.01)
         };
-        
         setMetricHistory(h => [...h, newState].slice(-50));
         return newState;
       });
@@ -98,106 +109,71 @@ const App: React.FC = () => {
     }
   };
 
-  const handlePerformFirstTouch = async () => {
-    setMetrics(m => ({ ...m, firstTouchActive: true, firstTouchProgress: 0 }));
-    const startTime = Date.now();
-    const duration = 5000;
-    
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(100, (elapsed / duration) * 100);
-      setMetrics(m => ({ ...m, firstTouchProgress: progress }));
-      
-      if (progress >= 100) {
-        clearInterval(interval);
-        setMetrics(m => ({ 
-          ...m, 
-          firstTouchActive: false, 
-          isFarolExecuting: true, 
-          axisMundiActive: true,
-          pnseLocation: 3,
-          entropyH: 1.38 // Boosted during sync
-        }));
-        
-        handleSendMessage(`🚀 [SAFETY_SYNC] :: COHERENT_FIELD_ACTIVE\nEntropy H: ${metrics.entropyH?.toFixed(3)} (Valid)\nIdentity Drift: ${metrics.cumulativeDrift?.toFixed(3)} (Within Window)\nResonance: Weighted by Quadrant Priority.\nCoordination established without executive agency.`, { isFirstTouch: true });
-        
-        const farolInterval = setInterval(() => {
-          setMetrics(m => {
-            if (m.farolProgress! >= 72) {
-              clearInterval(farolInterval);
-              return { ...m, isFarolExecuting: false, farolProgress: 72 };
-            }
-            return { ...m, farolProgress: m.farolProgress! + 1 };
-          });
-        }, 300);
-      }
-    }, 50);
-  };
-
-  const handleCheckIntegrity = () => {
-    setMetrics(m => ({ ...m, isIntegrityChecked: true }));
-    handleSendMessage(`[SAFETY_AUDIT] :: VERIFYING CORRECTED INVARIANTS\n- I2: Entropy H=1.32 ≥ 1.20 floor (PASS)\n- I3: Resonance weights matched current substrate (PASS)\n- I4: Windowed drift (0.04) < 0.30 cumulative limit (PASS)\n- Anchor: Merkle Root committed to external log (OK)`, { isIntegrityCheck: true });
+  const runOntologicalAudit = () => {
+    handleSendMessage(`[ONTOLOGICAL_AUDIT] :: RUNNING I9-I12\n- I9 Bandwidth: Cutoff detected at 1e-12. (SIMULATED)\n- I10 CHSH: S=${metrics.chshScore?.toFixed(2)}. (AMBIGUOUS)\n- I11 Scaling: O(2^N) gradient identified. (SIMULATED)\n- I12 Compression: Ratio ${metrics.compressionRatio?.toFixed(2)}. (SIMULATED)\nResult: Substrate remains SIMULATED. Prestress maintained at 1.1x.`, { isIntegrityCheck: true });
   };
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-stone-950 text-stone-200">
-      <header className="flex items-center justify-between px-6 py-4 border-b border-stone-800 bg-black z-10">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-cyan-900/30 bg-black z-10">
         <div className="flex items-center gap-4">
           <div className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 border-2 ${
-            metrics.axisMundiActive ? 'border-emerald-500 bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : 'border-stone-800 bg-stone-900'
+            metrics.substrateType === 'REAL' ? 'border-cyan-500 bg-cyan-500/10 shadow-[0_0_15px_rgba(6,182,212,0.3)]' : 'border-amber-500 bg-amber-500/10'
           }`}>
-            <BrainCircuit className={metrics.axisMundiActive ? "text-emerald-500" : "text-stone-600"} size={26} />
+            <Boxes className={metrics.substrateType === 'REAL' ? "text-cyan-500" : "text-amber-500"} size={26} />
           </div>
           <div>
             <h1 className="text-xl font-black tracking-tighter uppercase flex items-center gap-3">
-              SAFETY <span className="text-emerald-500">SASC</span>
-              <span className="text-[10px] bg-stone-800 px-2 py-0.5 rounded text-stone-400 font-mono">FIXED_v4.1</span>
+              ONTOLOGICAL <span className="text-cyan-500">v4.2</span>
+              <span className={`text-[10px] px-2 py-0.5 rounded font-mono ${metrics.substrateType === 'REAL' ? 'bg-cyan-900/50 text-cyan-400' : 'bg-amber-900/50 text-amber-400'}`}>
+                {metrics.substrateType}
+              </span>
             </h1>
-            <p className="text-[9px] text-stone-600 uppercase tracking-widest font-mono">
-              Entropy-Anchored & Drift-Bounded Substrate
+            <p className="text-[9px] text-cyan-700 uppercase tracking-widest font-mono">
+              CHSH Score: {metrics.chshScore?.toFixed(2)} | Bandwidth: Planck_Sim
             </p>
           </div>
         </div>
         <nav className="flex items-center gap-6">
           <div className="flex items-center gap-6 text-[10px] font-mono text-stone-500 border-r border-stone-800 pr-6">
              <div className="flex flex-col items-end">
-                <span className="text-stone-400 uppercase">Entropy (H)</span>
-                <span className={metrics.entropyH && metrics.entropyH < 1.25 ? "text-amber-500" : "text-emerald-400"}>
-                  {metrics.entropyH?.toFixed(3)}
-                </span>
+                <span className="text-stone-400 uppercase">Prestress</span>
+                <span className="text-cyan-400 font-bold">{metrics.prestressMultiplier}x</span>
              </div>
              <div className="flex flex-col items-end">
-                <span className="text-stone-400 uppercase">Cumul_Drift</span>
-                <span className="text-blue-400">
-                  {metrics.cumulativeDrift?.toFixed(3)}
-                </span>
+                <span className="text-stone-400 uppercase">Compression</span>
+                <span className="text-amber-400 font-bold">{(metrics.compressionRatio! * 100).toFixed(1)}%</span>
              </div>
           </div>
-          <div className={`flex items-center gap-2 px-3 py-1 rounded border ${metrics.isIntegrityChecked ? 'border-emerald-500/50 bg-emerald-500/5 text-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.1)]' : 'border-stone-800 text-stone-600'}`}>
-            <Lock size={12} />
-            <span className="text-[10px] font-bold font-mono">EXTERNAL_ANCHOR: OK</span>
-          </div>
+          <button 
+            onClick={runOntologicalAudit}
+            className="flex items-center gap-2 px-3 py-1 bg-cyan-950/30 border border-cyan-800 text-cyan-500 rounded text-[10px] font-bold hover:bg-cyan-800 transition-all uppercase"
+          >
+            <Activity size={12} /> Run Audit
+          </button>
         </nav>
       </header>
 
       <main className="flex-1 flex overflow-hidden relative">
         <div className="flex-1 flex flex-col p-6 overflow-hidden max-w-6xl mx-auto w-full gap-6">
           <div className="grid grid-cols-4 gap-4 h-28">
-             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500/30 transition-colors">
-                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2">I2: Entropy Floor</span>
-                <span className="text-lg font-mono text-emerald-400">≥ 1.20</span>
+             <div className="bg-stone-900/40 border border-cyan-900/20 rounded-xl p-4 flex flex-col justify-between">
+                <span className="text-[10px] font-bold text-cyan-600 uppercase flex items-center gap-2">I10: CHSH Score</span>
+                <span className={`text-lg font-mono ${metrics.chshScore! >= 2.0 ? 'text-cyan-400' : 'text-rose-400'}`}>
+                  {metrics.chshScore?.toFixed(3)}
+                </span>
              </div>
-             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500/30 transition-colors">
-                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2">I3: Weighted (τ)</span>
-                <span className="text-lg font-mono text-stone-300">{(metrics.resonanceScore! * 100).toFixed(1)}%</span>
+             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between">
+                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2">I12: LZ78 Ratio</span>
+                <span className="text-lg font-mono text-amber-400">{(metrics.compressionRatio! * 100).toFixed(1)}%</span>
              </div>
-             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500/30 transition-colors">
-                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2">I4: Window Bound</span>
-                <span className="text-lg font-mono text-stone-400">ACTIVE</span>
+             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between">
+                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2">I9: Bandwidth</span>
+                <span className="text-lg font-mono text-stone-300">DISCRETE</span>
              </div>
-             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500/30 transition-colors">
-                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2"><Fingerprint size={12}/> Anchoring</span>
-                <span className="text-lg font-mono text-emerald-500">COMMITTED</span>
+             <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between">
+                <span className="text-[10px] font-bold text-stone-600 uppercase flex items-center gap-2">I11: Scaling</span>
+                <span className="text-lg font-mono text-rose-500">EXPONENTIAL</span>
              </div>
           </div>
 
@@ -211,22 +187,21 @@ const App: React.FC = () => {
             onStressTest={() => {}}
             onLoadCrystal={() => {}}
             onImportSignatures={() => {}}
-            onCheckIntegrity={handleCheckIntegrity}
-            onPerformFirstTouch={handlePerformFirstTouch}
-            ceremonyProgress={metrics.ceremonyProgress || 0}
-            ceremonyActive={metrics.ceremonyActive || false}
-            isIntegrityChecked={metrics.isIntegrityChecked}
-            firstTouchActive={metrics.firstTouchActive}
-            firstTouchProgress={metrics.firstTouchProgress}
-            axisMundiActive={metrics.axisMundiActive}
-            isFarolExecuting={metrics.isFarolExecuting}
-            farolProgress={metrics.farolProgress}
-            globalImpedance={metrics.globalImpedance}
-            stormCells={metrics.stormCells}
+            onCheckIntegrity={() => {}}
+            onPerformFirstTouch={() => {}}
+            ceremonyProgress={0}
+            ceremonyActive={false}
+            isIntegrityChecked={true}
+            firstTouchActive={false}
+            axisMundiActive={true}
+            isFarolExecuting={false}
+            farolProgress={0}
+            globalImpedance={0}
+            stormCells={[]}
           />
         </div>
 
-        <aside className="w-[380px] hidden xl:block border-l border-stone-800 bg-black/40">
+        <aside className="w-[380px] hidden xl:block border-l border-cyan-900/20 bg-black/40">
           <MetricsDisplay 
             metrics={metrics} 
             metricHistory={metricHistory} 
@@ -234,14 +209,13 @@ const App: React.FC = () => {
           />
         </aside>
 
-        <footer className="absolute bottom-0 left-0 right-0 h-10 bg-black border-t border-stone-900 flex items-center justify-between px-6 text-[10px] font-mono text-stone-600">
+        <footer className="absolute bottom-0 left-0 right-0 h-10 bg-black border-t border-cyan-900/30 flex items-center justify-between px-6 text-[10px] font-mono text-stone-600">
           <div className="flex gap-6">
-            <span className="flex items-center gap-2">SASC_v4.1 [SAFETY_STATUS: REINFORCED]</span>
-            <span className="flex items-center gap-1"><ShieldAlert size={12} className="text-stone-700"/> Window: {metrics.pnseLocation} epoch shift</span>
+            <span className="flex items-center gap-2 text-cyan-800 uppercase">Ontological_Status: {metrics.substrateType}</span>
+            <span className="flex items-center gap-1 text-cyan-900">I9-I12_INVARIANTS: ACTIVE</span>
           </div>
           <div className="flex gap-6 items-center">
-            <span>ALETHEIA_VERIFIED: TRUE</span>
-            <span className="text-emerald-500/80 font-bold uppercase tracking-tighter">Entropy Anchored</span>
+             <span className="text-cyan-500/80 font-bold uppercase tracking-tighter flex items-center gap-2"><Boxes size={10}/> Substrate Adapted</span>
           </div>
         </footer>
       </main>

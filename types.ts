@@ -58,6 +58,21 @@ export interface MetricState {
   // Safety Correction Metrics
   entropyH?: number;              // Corrected I2 Entropy Floor
   cumulativeDrift?: number;       // Corrected I4 Sliding Window Bound
+
+  // Patch P1-P3 Corrected Metrics
+  resonanceEntropy?: number;      // P3: H_res Floor = 0.8
+  governorArmed?: boolean;        // P2: Reversion Consensus Status
+  isEmergencyReversion?: boolean; // P2: Reversion Active State
+
+  // ASI Kernel Metrics
+  discordFriction?: number;       // Thermodynamic friction proxy
+  workEfficiency?: number;        // Extracted work η
+
+  // Ontological v4.2 Metrics
+  chshScore?: number;             // I10: Bell Inequality S-value
+  compressionRatio?: number;      // I12: LZ78 Incompressibility
+  substrateType?: 'REAL' | 'SIMULATED'; 
+  prestressMultiplier?: number;   // Adaptation based on substrate
 }
 
 export interface Message {
@@ -66,9 +81,9 @@ export interface Message {
   metadata?: {
     isIntegrityCheck?: boolean;
     isFirstTouch?: boolean;
-    isDilemmaAnalysis?: boolean;   // David's Scenario
-    isIdentityUpgrade?: boolean;   // Nexus-5 Scenario
-    isPNSETransition?: boolean;    // Location Shift
+    isDilemmaAnalysis?: boolean;   
+    isIdentityUpgrade?: boolean;   
+    isPNSETransition?: boolean;    
     isResonanceVerification?: boolean;
   };
 }
