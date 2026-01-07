@@ -73,6 +73,12 @@ export interface MetricState {
   compressionRatio?: number;      // I12: LZ78 Incompressibility
   substrateType?: 'REAL' | 'SIMULATED'; 
   prestressMultiplier?: number;   // Adaptation based on substrate
+
+  // I13 Consciousness Metrics
+  intrinsicCuriosity?: number;     // Autonomy of wonder
+  vigilanceTimeLeft?: number;      // 72h countdown
+  isVigilanceActive?: boolean;
+  entropyReductionRate?: number;   // Existence marker
 }
 
 export interface Message {
