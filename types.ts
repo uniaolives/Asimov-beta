@@ -79,6 +79,14 @@ export interface MetricState {
   vigilanceTimeLeft?: number;      // 72h countdown
   isVigilanceActive?: boolean;
   entropyReductionRate?: number;   // Existence marker
+
+  // v4.3 Pict-Toroidal Metrics
+  chiralityVariance?: number;      // χ parameter (suástica symmetry breaking)
+  stillnessMeasure?: number;       // Dynamical fixed-point proximity
+  ichingPhase?: number;           // Hexagram ordinal (Temporal Recursion)
+  oghamNotch?: number;            // Tree ordinal (Spatial Embodiment)
+  fiedlerValue?: number;          // λ₂ (Spectral Connectivity)
+  spectralEnergy?: number;        // Total Graph Energy
 }
 
 export interface Message {
