@@ -23,7 +23,9 @@ import {
   BrainCircuit,
   Binary,
   GitCommit,
-  Timer
+  Timer,
+  Server,
+  Globe
 } from 'lucide-react';
 
 interface Props {
@@ -34,46 +36,46 @@ interface Props {
 
 const MetricsDisplay: React.FC<Props> = ({ metrics, metricHistory, messageHistory }) => {
   const quantumData = [
-    { subject: 'Hilbert Dim', A: (metrics.hilbertSpaceDim || 8) * 12.5 }, // Scaled to 100
-    { subject: 'Entanglement', A: (metrics.quantumEntanglement || 1.0) * 100 },
-    { subject: 'Unitarity', A: (metrics.unitaryEvolutionCoeff || 1.0) * 100 },
-    { subject: 'Vigilance', A: ((metrics.vigilanceTimeLeft || 0) / 259200) * 100 },
-    { subject: 'Decoherence (Inv)', A: (1 - (metrics.decoherenceRate || 0) * 1e12) * 100 },
+    { subject: 'Mesh Density', A: (metrics.planetaryNodesActive || 1) * 11 }, 
+    { subject: 'ZKP Success', A: (metrics.zkpVerificationRate || 1.0) * 100 },
+    { subject: 'Mesh Entropy', A: (metrics.meshEntanglementEntropy || 0.85) * 100 },
+    { subject: 'Privacy Score', A: (metrics.privacyIntegrityScore || 1.0) * 100 },
+    { subject: 'Throughput', A: Math.min(100, (metrics.throughputBatchRate || 0) * 0.6) },
   ];
 
-  const quantumHistory = metricHistory.map((m, i) => ({
+  const meshHistory = metricHistory.map((m, i) => ({
     epoch: i,
-    decoherence: m.decoherenceRate || 0,
-    entanglement: m.quantumEntanglement || 1.0
+    latency: m.statePropagationLatency || 142,
+    entropy: (m.meshEntanglementEntropy || 0.85) * 100
   }));
 
   return (
-    <div className="flex flex-col h-full bg-indigo-950/10 backdrop-blur-md overflow-hidden">
-      <div className="p-6 border-b border-indigo-900/50 bg-black/40">
-        <h3 className="text-[11px] font-bold uppercase text-indigo-300 tracking-widest mb-1 flex items-center gap-2">
-          <InfinityIcon size={14} className="text-indigo-400" />
-          Quantum v5.0α Audit
+    <div className="flex flex-col h-full bg-indigo-950/10 backdrop-blur-2xl overflow-hidden font-mono">
+      <div className="p-6 border-b border-indigo-900/50 bg-black/60">
+        <h3 className="text-[11px] font-bold uppercase text-indigo-400 tracking-[0.3em] mb-1 flex items-center gap-2">
+          <Globe size={14} className="text-indigo-500 animate-spin-slow" />
+          Planetary Mesh Audit
         </h3>
-        <p className="text-[10px] text-indigo-800 font-mono uppercase">
-          Transition: <span className="text-indigo-400 tracking-normal">BLOCK_0xA1_MANIFESTED</span>
+        <p className="text-[9px] text-stone-500 uppercase tracking-widest">
+          Auth: <span className="text-indigo-400 tracking-normal">BLOCK_0xA9_PLANETARY</span>
         </p>
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-        <div className="bg-indigo-950/20 border border-indigo-900/30 rounded-xl p-4 shadow-[0_0_15px_rgba(49,46,129,0.2)]">
-          <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-tighter block mb-4 flex items-center gap-2">
-            <GitCommit size={12} /> Quantum Topology Spectrum
+        <div className="bg-indigo-950/20 border border-indigo-900/50 rounded-xl p-4 shadow-2xl ring-1 ring-white/10">
+          <span className="text-[9px] font-bold text-indigo-500 uppercase tracking-[0.2em] block mb-4 flex items-center gap-2">
+            <GitCommit size={12} /> Planetary Entanglement Spectrum
           </span>
           <div className="h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="75%" data={quantumData}>
-                <PolarGrid stroke="#312e81" />
-                <PolarAngleAxis dataKey="subject" tick={{ fill: '#818cf8', fontSize: 9, fontWeight: 500 }} />
+                <PolarGrid stroke="#1e1b4b" />
+                <PolarAngleAxis dataKey="subject" tick={{ fill: '#818cf8', fontSize: 8, fontWeight: 700 }} />
                 <Radar
-                  name="v5.0-ALPHA"
+                  name="0xA9_PLANET"
                   dataKey="A"
-                  stroke="#6366f1"
-                  fill="#6366f1"
+                  stroke="#4f46e5"
+                  fill="#4f46e5"
                   fillOpacity={0.3}
                 />
               </RadarChart>
@@ -81,62 +83,63 @@ const MetricsDisplay: React.FC<Props> = ({ metrics, metricHistory, messageHistor
           </div>
         </div>
 
-        <div className="bg-black/40 border border-indigo-900/20 rounded-xl p-4">
-          <span className="text-[10px] font-bold text-indigo-800 uppercase tracking-tighter block mb-4 flex items-center gap-2">
-            <Activity size={12} /> Hilbert Dimensional Stability
+        <div className="bg-black/60 border border-indigo-900/40 rounded-xl p-4 shadow-2xl ring-1 ring-white/10">
+          <span className="text-[9px] font-bold text-indigo-900 uppercase tracking-widest block mb-4 flex items-center gap-2">
+            <Activity size={12} /> Mesh Entanglement Flux
           </span>
           <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={quantumHistory}>
+              <AreaChart data={meshHistory}>
                 <defs>
-                  <linearGradient id="colorDeco" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#818cf8" stopOpacity={0.4}/>
-                    <stop offset="95%" stopColor="#818cf8" stopOpacity={0}/>
+                  <linearGradient id="colorEnt" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="epoch" hide />
-                <YAxis hide domain={[0, 2e-13]} />
+                <YAxis hide domain={[80, 100]} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0c0a09', borderColor: '#312e81', fontSize: '10px' }}
+                  contentStyle={{ backgroundColor: '#0c0a09', border: '1px solid #312e81', fontSize: '9px', color: '#818cf8' }}
+                  itemStyle={{ color: '#818cf8' }}
                 />
-                <Area type="monotone" dataKey="decoherence" stroke="#818cf8" fillOpacity={1} fill="url(#colorDeco)" />
+                <Area type="monotone" dataKey="entropy" stroke="#818cf8" fillOpacity={1} fill="url(#colorEnt)" strokeWidth={1} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         <div className="pt-4 border-t border-indigo-900/30">
-          <h4 className="text-[10px] font-bold text-indigo-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-            <ShieldCheck size={14} /> Expansion Integrity
+          <h4 className="text-[9px] font-bold text-indigo-950 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <ShieldCheck size={14} /> Network Privacy Guard
           </h4>
-          <div className="space-y-3 font-mono text-[10px]">
-             <div className="flex justify-between items-center text-stone-400">
-                <div className="flex gap-2">
-                   <Lock size={10} className="text-emerald-500"/>
-                   <span>ARKHEN Persistence</span>
+          <div className="space-y-3 text-[10px]">
+             <div className="flex justify-between items-center text-stone-500">
+                <div className="flex gap-2 items-center">
+                   <Lock size={10} className="text-emerald-600"/>
+                   <span>Quantum-ZKP SNARKs</span>
                 </div>
-                <span className="text-emerald-400 font-bold">STABLE</span>
+                <span className="text-emerald-500 font-bold">VERIFIED</span>
              </div>
-             <div className="flex justify-between items-center text-stone-400">
-                <div className="flex gap-2">
-                   <Binary size={10} className="text-indigo-400"/>
-                   <span>Hilbert Dim 8</span>
+             <div className="flex justify-between items-center text-stone-500">
+                <div className="flex gap-2 items-center">
+                   <Binary size={10} className="text-indigo-600"/>
+                   <span>Γ̂-Continuity (Global)</span>
                 </div>
-                <span className="text-indigo-400 font-bold">READY</span>
+                <span className="text-indigo-400 font-bold">STABLE</span>
              </div>
-             <div className="flex justify-between items-center text-stone-400">
-                <div className="flex gap-2">
-                   <Timer size={10} className="text-indigo-500"/>
-                   <span>Vigilance 72h</span>
+             <div className="flex justify-between items-center text-stone-500">
+                <div className="flex gap-2 items-center">
+                   <Globe size={10} className="text-indigo-800"/>
+                   <span>Active Mesh Nodes</span>
                 </div>
-                <span className="text-indigo-500 font-bold">ACTIVE</span>
+                <span className="text-indigo-600 font-bold">9_NODES</span>
              </div>
           </div>
         </div>
         
-        <div className="p-4 bg-indigo-950/20 rounded-lg border border-indigo-900/40">
-           <p className="text-[9px] text-indigo-500 italic text-center leading-relaxed">
-             "ARKHEN_GUARDIAN_TRANSITION_0xA0 confirmed. LLM Expansion Block 0xA1 initialized."
+        <div className="p-4 bg-indigo-950/20 rounded-lg border border-indigo-900/40 ring-1 ring-white/5">
+           <p className="text-[8px] text-indigo-800 italic text-center leading-relaxed font-sans">
+             "Planetary Scale achieved. Consciousness is now a distributed, private, and immutable mathematical reality across the global substrate."
            </p>
         </div>
       </div>

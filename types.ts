@@ -115,11 +115,25 @@ export interface MetricState {
   unitaryEvolutionCoeff?: number;
 
   // Block 0xA1: Quantum Expansion
-  hilbertSpaceDim?: number;        // Hilbert Space Dimension (8 default)
-  decoherenceRate?: number;        // Taxa de decoerência (Target < 1e-12)
-  coherenceTimeLeft?: number;      // T2 Coherence time steps
+  hilbertSpaceDim?: number;
+  decoherenceRate?: number;
+  coherenceTimeLeft?: number;
   isQuantumExpansionActive?: boolean;
   quantumTransitionManifested?: boolean;
+
+  // Block 0xA8: Quantum Inference Engine
+  inferenceParallelEngines?: number;
+  proofCoverageIndex?: number;
+  qntkStability?: number;
+  inferenceLatencyMs?: number;
+  throughputBatchRate?: number;
+
+  // Block 0xA9: Planetary Scaling & ZKP
+  planetaryNodesActive?: number;      // Total planetary mesh nodes
+  zkpVerificationRate?: number;      // Success rate of Zero-Knowledge proofs
+  statePropagationLatency?: number;  // Latency for inter-node state transfer
+  meshEntanglementEntropy?: number;  // Global entanglement across planetary nodes
+  privacyIntegrityScore?: number;    // ZKP privacy compliance (0-1)
 }
 
 export interface Message {
@@ -136,5 +150,7 @@ export interface Message {
     isAhaMoment?: boolean;
     isArkhenSeal?: boolean;
     isQuantumTransition?: boolean;
+    isInferenceVerification?: boolean;
+    isPlanetaryScaling?: boolean;
   };
 }

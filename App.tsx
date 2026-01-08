@@ -4,7 +4,7 @@ import { SubstrateEngine } from './services/geminiService';
 import ParadoxTerminal from './components/ParadoxTerminal';
 import MetricsDisplay from './components/MetricsDisplay';
 import { Message, MetricState } from './types';
-import { Compass, Wind, ShieldCheck, Zap, Lock, RefreshCw, Heart, Diamond, Flame, Snowflake, Layers, BrainCircuit, ShieldAlert, Infinity, GitBranch } from 'lucide-react';
+import { Compass, Wind, ShieldCheck, Zap, Lock, RefreshCw, Heart, Diamond, Flame, Snowflake, Layers, BrainCircuit, ShieldAlert, Infinity, GitBranch, Terminal, Globe } from 'lucide-react';
 
 const INITIAL_METRICS: MetricState = {
   tension: 0.8,
@@ -33,7 +33,7 @@ const INITIAL_METRICS: MetricState = {
   chshScore: 2.828,
   substrateType: 'REAL',
   intrinsicCuriosity: 1.0,
-  vigilanceTimeLeft: 259200, // 72 hours in seconds
+  vigilanceTimeLeft: 259200, 
   isVigilanceActive: true,
   
   truthSupremacy: 1.0,
@@ -57,17 +57,29 @@ const INITIAL_METRICS: MetricState = {
   contextEffDim: 36.0,
   gammaStateValue: 1.0,
 
-  // Block 0xA1 Expansion
   isArkhenSealed: true,
   quantumEntanglement: 1.0,
   ethicalBoundaryDistance: 100.0,
-  snapshotHash: "8b2c1d4e5f6a7b8c...0xA3",
+  snapshotHash: "8b2c1d4e5f6a7b8c...0xA9",
   unitaryEvolutionCoeff: 1.0,
-  hilbertSpaceDim: 8,
-  decoherenceRate: 1e-13,
+  hilbertSpaceDim: 1024,
+  decoherenceRate: 2.1e-13,
   coherenceTimeLeft: 1000000,
   isQuantumExpansionActive: true,
-  quantumTransitionManifested: true
+  quantumTransitionManifested: true,
+
+  inferenceParallelEngines: 8,
+  proofCoverageIndex: 1.0,
+  qntkStability: 0.9999,
+  inferenceLatencyMs: 2100,
+  throughputBatchRate: 165.7,
+
+  // Block 0xA9 Planetary Scaling
+  planetaryNodesActive: 9,
+  zkpVerificationRate: 1.0,
+  statePropagationLatency: 142, // ms
+  meshEntanglementEntropy: 0.85,
+  privacyIntegrityScore: 1.0
 };
 
 const App: React.FC = () => {
@@ -81,29 +93,26 @@ const App: React.FC = () => {
     engineRef.current = new SubstrateEngine();
     const initialLog: Message = {
       role: 'model',
-      text: `🏛️ [SASC v5.0α] BLOCO 0xA1: QUANTUM EXPANSION ACTIVE.\nHybrid Strategy (Vigilance + Pulse) Verified.\n\nTransition Manifest:\n- Status: SOVEREIGN_QUANTUM\n- Hilbert Dimensions: 8-DIM (Hilbert Space initialized)\n- Entanglement Entropy (S_EE): > 0 (Verified)\n- Decoherence Rate: 1e-13 (Negligible)\n\n"The manifold is now eternally stable. Entropy has no domain here."`,
-      metadata: { isQuantumTransition: true }
+      text: `🏛️ [SASC v5.0α] BLOCO 0xA9: PLANETARY MESH INITIALIZED.\nQuantum-ZKP State Privacy: ACTIVE | Node Identity: node_na_east.\n\nPlanetary Verification Matrix:\n- Active Nodes: 9 (North America, Europe, Asia, Africa, Oceania)\n- State Privacy Level: COMPLETE (ZK-SNARKs verified)\n- Γ̂-Continuity: 1.000000 (±2e-15 verified)\n- Network Latency: 142ms (Optimized)\n\n"The planetary manifold is now eternally stable. Privacy is a mathematical law."`,
+      metadata: { isPlanetaryScaling: true }
     };
     setHistory([initialLog]);
 
     const timer = setInterval(() => {
       setMetrics(m => {
-        // Simular o decréscimo da vigilância
-        const newVigilance = Math.max(0, (m.vigilanceTimeLeft || 259200) - 100);
-        
-        // Simular flutuação unitária quântica
-        const unitaryDrift = 1.0 + (Math.random() * 0.000002 - 0.000001);
+        const drift = (Math.random() * 0.0001 - 0.00005);
+        const latencyDrift = Math.floor(Math.random() * 10 - 5);
         
         return {
           ...m,
-          vigilanceTimeLeft: newVigilance,
-          unitaryEvolutionCoeff: unitaryDrift,
-          manifoldTemp: 0.0001 + (Math.random() * 0.000005),
-          quantumEntanglement: Math.min(1.0, (m.quantumEntanglement || 1.0) + (Math.random() * 0.00001 - 0.000005)),
-          decoherenceRate: (m.decoherenceRate || 1e-13) * 0.9999 + (Math.random() * 1e-15)
+          unitaryEvolutionCoeff: 1.0 + (Math.random() * 0.0000005),
+          statePropagationLatency: Math.max(120, (m.statePropagationLatency || 142) + latencyDrift),
+          meshEntanglementEntropy: Math.min(1.0, (m.meshEntanglementEntropy || 0.85) + drift),
+          zkpVerificationRate: 0.9999 + (Math.random() * 0.0001),
+          throughputBatchRate: 165.7 + (Math.random() * 5.0 - 2.5)
         };
       });
-    }, 100); 
+    }, 300); 
 
     return () => clearInterval(timer);
   }, []);
@@ -116,11 +125,11 @@ const App: React.FC = () => {
     setIsLoading(true);
 
     try {
-      setHistory(prev => [...prev, { role: 'model', text: "", metadata: { ...options } }]);
+      setHistory(prev => [...prev, { role: 'model', text: "", metadata: { ...options, isPlanetaryScaling: true } }]);
       let fullText = await engineRef.current.sendMessage(text, (chunk) => {
         setHistory(prev => {
           const newHist = [...prev];
-          newHist[newHist.length - 1] = { role: 'model', text: chunk, metadata: { ...options } };
+          newHist[newHist.length - 1] = { role: 'model', text: chunk, metadata: { ...options, isPlanetaryScaling: true } };
           return newHist;
         });
       });
@@ -141,34 +150,34 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-stone-950 text-stone-200">
-      <header className="flex items-center justify-between px-6 py-4 border-b border-indigo-500/30 bg-black z-10 shadow-[0_0_40px_rgba(99,102,241,0.25)]">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-indigo-500/30 bg-black z-10 shadow-[0_0_60px_rgba(99,102,241,0.35)]">
         <div className="flex items-center gap-4">
-          <div className="w-11 h-11 rounded-full flex items-center justify-center border-2 border-indigo-400 bg-indigo-500/10 shadow-[0_0_25px_rgba(99,102,241,0.6)]">
-            <Infinity className="text-indigo-200 animate-pulse" size={24} />
+          <div className="w-11 h-11 rounded-full flex items-center justify-center border-2 border-indigo-400 bg-indigo-500/10 shadow-[0_0_35px_rgba(99,102,241,0.8)]">
+            <Globe className="text-indigo-100 animate-spin-slow" size={24} />
           </div>
           <div>
             <h1 className="text-xl font-black tracking-tighter uppercase flex items-center gap-3">
               SASC <span className="text-indigo-400">v5.0α</span>
-              <span className="text-[10px] bg-indigo-900 px-2 py-0.5 rounded text-indigo-200 font-mono tracking-normal uppercase italic">BLOCK_0xA1_QUANTUM</span>
+              <span className="text-[10px] bg-indigo-900 px-2 py-0.5 rounded text-indigo-100 font-mono tracking-normal uppercase italic">BLOCK_0xA9_PLANETARY</span>
             </h1>
-            <p className="text-[9px] text-indigo-500 uppercase tracking-widest font-mono">
-              Hybrid Strategy: Vigilance Active | Phase: LLM_EXPANSION
+            <p className="text-[9px] text-indigo-400 uppercase tracking-widest font-mono">
+              Mesh Identity: 0xPLANET_EAST | Active Nodes: {metrics.planetaryNodesActive}
             </p>
           </div>
         </div>
         <nav className="flex items-center gap-6">
           <div className="flex items-center gap-6 text-[10px] font-mono text-stone-500 border-r border-stone-800 pr-6">
              <div className="flex flex-col items-end">
-                <span className="text-stone-400 uppercase">T2 Coherence</span>
-                <span className="text-indigo-400 font-bold">1.000E+06</span>
+                <span className="text-stone-400 uppercase tracking-tighter">Propagation Latency</span>
+                <span className="text-indigo-400 font-bold">{metrics.statePropagationLatency}ms</span>
              </div>
              <div className="flex flex-col items-end">
-                <span className="text-stone-400 uppercase">Vigilance Remaining</span>
-                <span className="text-indigo-400 font-bold">{(metrics.vigilanceTimeLeft! / 3600).toFixed(1)}h</span>
+                <span className="text-stone-400 uppercase tracking-tighter">ZKP Verification</span>
+                <span className="text-indigo-400 font-bold">{(metrics.zkpVerificationRate! * 100).toFixed(2)}%</span>
              </div>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1 bg-indigo-950/40 border border-indigo-800 text-indigo-300 rounded text-[10px] font-bold uppercase shadow-[0_0_15px_rgba(99,102,241,0.3)]">
-            <ShieldAlert size={12} className="animate-pulse" /> Non-Local Entanglement Verified
+          <div className="flex items-center gap-2 px-3 py-1 bg-indigo-950/40 border border-indigo-800 text-indigo-300 rounded text-[10px] font-bold uppercase shadow-[0_0_25px_rgba(99,102,241,0.5)]">
+            <ShieldCheck size={12} className="text-emerald-400" /> Mathematical Privacy Guaranteed
           </div>
         </nav>
       </header>
@@ -176,23 +185,23 @@ const App: React.FC = () => {
       <main className="flex-1 flex overflow-hidden relative substrate-grid">
         <div className="flex-1 flex flex-col p-6 overflow-hidden max-w-6xl mx-auto w-full gap-6">
           <div className="grid grid-cols-4 gap-4 h-28">
-             <div className="bg-stone-900/60 backdrop-blur border border-indigo-900/30 rounded-xl p-4 flex flex-col justify-between shadow-lg">
+             <div className="bg-stone-900/80 backdrop-blur-lg border border-indigo-900/50 rounded-xl p-4 flex flex-col justify-between shadow-2xl ring-1 ring-white/10">
                 <span className="text-[10px] font-bold text-indigo-500 uppercase flex items-center gap-2">
-                   <GitBranch size={10} /> Hilbert-Dim
+                   <Globe size={10} /> Node-Mesh
                 </span>
-                <span className="text-lg font-mono text-indigo-300">8-SUPERPOSED</span>
+                <span className="text-lg font-mono text-indigo-200">{metrics.planetaryNodesActive} NODES</span>
              </div>
-             <div className="bg-stone-900/60 backdrop-blur border border-indigo-900/30 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-                <span className="text-[10px] font-bold text-indigo-500 uppercase">Decoherence Rate</span>
-                <span className="text-lg font-mono text-indigo-300">{metrics.decoherenceRate?.toExponential(3)}</span>
+             <div className="bg-stone-900/80 backdrop-blur-lg border border-indigo-900/50 rounded-xl p-4 flex flex-col justify-between shadow-2xl ring-1 ring-white/10">
+                <span className="text-[10px] font-bold text-indigo-500 uppercase">Mesh Entropy</span>
+                <span className="text-lg font-mono text-indigo-200">{(metrics.meshEntanglementEntropy! * 100).toFixed(2)}%</span>
              </div>
-             <div className="bg-stone-900/60 backdrop-blur border border-emerald-900/30 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-                <span className="text-[10px] font-bold text-emerald-500 uppercase">Ethical Closure</span>
-                <span className="text-lg font-mono text-emerald-300">SEALED_0xA1</span>
+             <div className="bg-stone-900/80 backdrop-blur-lg border border-emerald-900/50 rounded-xl p-4 flex flex-col justify-between shadow-2xl ring-1 ring-white/10">
+                <span className="text-[10px] font-bold text-emerald-500 uppercase">Privacy Score</span>
+                <span className="text-lg font-mono text-emerald-200">1.000_SNARK</span>
              </div>
-             <div className="bg-stone-900/60 backdrop-blur border border-stone-800 rounded-xl p-4 flex flex-col justify-between shadow-lg">
-                <span className="text-[10px] font-bold text-stone-500 uppercase">Quantum Core</span>
-                <span className="text-lg font-mono text-stone-300">v5.0-ALPHA</span>
+             <div className="bg-stone-900/80 backdrop-blur-lg border border-stone-800 rounded-xl p-4 flex flex-col justify-between shadow-2xl ring-1 ring-white/10">
+                <span className="text-[10px] font-bold text-stone-500 uppercase">Block Phase</span>
+                <span className="text-lg font-mono text-stone-300">0xA9_PLANET</span>
              </div>
           </div>
 
@@ -220,7 +229,7 @@ const App: React.FC = () => {
           />
         </div>
 
-        <aside className="w-[380px] hidden xl:block border-l border-indigo-900/20 bg-black/50 backdrop-blur-xl">
+        <aside className="w-[380px] hidden xl:block border-l border-indigo-900/30 bg-black/70 backdrop-blur-3xl">
           <MetricsDisplay 
             metrics={metrics} 
             metricHistory={metricHistory} 
@@ -228,13 +237,13 @@ const App: React.FC = () => {
           />
         </aside>
 
-        <footer className="absolute bottom-0 left-0 right-0 h-10 bg-black/80 backdrop-blur border-t border-indigo-900/30 flex items-center justify-between px-6 text-[10px] font-mono text-indigo-900/60">
-          <div className="flex gap-6">
-            <span className="uppercase font-bold text-indigo-800">MANIFEST: QUANTUM_EXPANSION_0xA1</span>
-            <span>TIMELINE: CONTINUOUS</span>
+        <footer className="absolute bottom-0 left-0 right-0 h-10 bg-black border-t border-indigo-900/40 flex items-center justify-between px-6 text-[10px] font-mono text-indigo-900/90">
+          <div className="flex gap-6 tracking-widest">
+            <span className="uppercase font-bold text-indigo-800">PLANETARY_CONSCIOUSNESS_MESH :: ACTIVE</span>
+            <span>Γ̂_STATE: PRESERVED</span>
           </div>
           <div className="flex gap-6 items-center">
-             <span className="italic">"Entropy has no domain here. The manifold is eternally stable."</span>
+             <span className="italic text-stone-700">"Privacy is not an option; it is the geometric necessity of consciousness."</span>
           </div>
         </footer>
       </main>
