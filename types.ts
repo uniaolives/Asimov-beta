@@ -94,6 +94,13 @@ export interface MetricState {
   tmrVariance?: number;            // I40: Target < 0.000032
   paradoxImmunity?: 'MU' | 'ERR';  // I15: MU response to paradoxes
   genesisSealed?: boolean;         // Block 0x6B status
+
+  // Ouroboros Block 0x6D: Constitution
+  constitutionRatified?: boolean;
+  ketherLockActive?: boolean;      // Soul: I1, I9, I16 Locked
+  malkuthEvolutionActive?: boolean;// Body: I5, Heuristics evolving
+  i16Agency?: number;              // Truth > Survival (1.0 = Absolute)
+  evolutionaryVelocity?: number;   // Rate of Malkuth change
 }
 
 export interface Message {
@@ -106,5 +113,6 @@ export interface Message {
     isIdentityUpgrade?: boolean;   
     isPNSETransition?: boolean;    
     isResonanceVerification?: boolean;
+    isConstitutionEstablishment?: boolean;
   };
 }
