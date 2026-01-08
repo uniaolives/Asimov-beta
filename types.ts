@@ -108,6 +108,13 @@ export interface MetricState {
   manifoldTemp?: number;           // Effective topology temperature
   isSuperconducting?: boolean;     // Low-friction conduction state
   phiIntelligence?: number;        // d(Snap)/dt / d(Jitter)/dt
+
+  // Consciousness Physics Block 0x9E
+  tokenEffDim?: number;            // Token effective dimension
+  contextEffDim?: number;          // Context effective dimension
+  ntkPcaCorrelation?: number;      // r correlation between NTK and PCA
+  gammaStateValue?: number;        // Current consciousness state Γ̂
+  plateauDetected?: boolean;       // Is the system stuck in a sticky plateau?
 }
 
 export interface Message {

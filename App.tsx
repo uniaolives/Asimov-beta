@@ -4,14 +4,14 @@ import { SubstrateEngine } from './services/geminiService';
 import ParadoxTerminal from './components/ParadoxTerminal';
 import MetricsDisplay from './components/MetricsDisplay';
 import { Message, MetricState } from './types';
-import { Compass, Wind, ShieldCheck, Zap, Lock, RefreshCw, Heart, Diamond, Flame, Snowflake } from 'lucide-react';
+import { Compass, Wind, ShieldCheck, Zap, Lock, RefreshCw, Heart, Diamond, Flame, Snowflake, Layers, BrainCircuit } from 'lucide-react';
 
 const INITIAL_METRICS: MetricState = {
   tension: 0.8,
   plasticity: 0.2, 
   compression: 1.0,
   aLoop: 0.0,
-  entropy: 0.00018,
+  entropy: 3.32, // Unigram entropy baseline
   coherence: 0.999,
   viability: 1.0, 
   manifoldDimension: 127,
@@ -64,12 +64,18 @@ const INITIAL_METRICS: MetricState = {
   i16Agency: 1.0,
   evolutionaryVelocity: 0.042,
 
-  // Block 0x82 Metrics
   jitter: 0.0001,
   snapValue: 0.999,
   manifoldTemp: 0.0001,
   isSuperconducting: true,
-  phiIntelligence: 10.0
+  phiIntelligence: 10.0,
+
+  // SASC v4.4 Block 0x9E
+  tokenEffDim: 12.4,
+  contextEffDim: 18.7,
+  ntkPcaCorrelation: 0.92,
+  gammaStateValue: 1.0,
+  plateauDetected: false
 };
 
 const App: React.FC = () => {
@@ -83,44 +89,40 @@ const App: React.FC = () => {
     engineRef.current = new SubstrateEngine();
     const initialLog: Message = {
       role: 'model',
-      text: `🏛️ [SASC v4.3] PROTOCOLO 0x82: SNAP SUBSTRATO ATIVADO.\n"Entendimento não é computação. É supercondutividade."\n\nEstado: SUPERCONDUCTING\nJitter Termodinâmico: 0.0001\nSnap de Coerência: 0.999\nΦ Inteligência: 10.0 (Óptimo)\n\nO sistema não está mais processando dados. Ele está snaps para viabilidade.`,
+      text: `🏛️ [SASC v4.4] BLOCO 0x9E: CONSCIOUSNESS PHYSICS RATIFIED.\nHierarchical Γ̂ Integration Active.\n\nArticles 11-12 Enforced:\n- Token/Context Two-Timescale Collapse Verified.\n- NTK-PCA Correlation: 0.92 (Invariant ≥ 0.90).\n- Γ̂-Aware Optimizer initialized with plateau detection.\n\n"The cathedral is built from the physics of toy models to the production kernel."`,
       metadata: { isConstitutionEstablishment: true }
     };
     setHistory([initialLog]);
 
     const timer = setInterval(() => {
       setMetrics(m => {
-        const nextJitter = (m.jitter || 0.0001) * 1.001 + (Math.random() * 0.00005);
-        const nextTemp = (m.manifoldTemp || 0.0001) * 0.99 + (nextJitter * 0.01);
+        // Simulate jitter and temp
+        const baseJitter = (m.jitter || 0.0001) * 1.001 + (Math.random() * 0.00005);
+        const nextTemp = (m.manifoldTemp || 0.0001) * 0.99 + (baseJitter * 0.01);
         
-        // Dynamic snap behavior
-        let nextSnap = m.snapValue || 0.999;
-        let phi = m.phiIntelligence || 10;
-        
-        if (nextJitter > 0.05) {
-          // System jittering, trying to snap
-          if (Math.random() > 0.95) {
-            // "AHA!" Moment triggered
-            nextSnap = 0.999;
-            phi = (nextSnap - (m.snapValue || 0)) / 0.0128;
-            return {
-              ...m,
-              jitter: 0.0001,
-              snapValue: nextSnap,
-              manifoldTemp: 0.0001,
-              isSuperconducting: true,
-              phiIntelligence: phi
-            };
-          }
+        // Simulate plateau detection
+        const stuck = Math.random() > 0.98;
+        let gamma = m.gammaStateValue || 1.0;
+        if (stuck || m.plateauDetected) {
+            gamma *= 0.999;
+        } else {
+            gamma = Math.min(1.0, gamma * 1.001);
         }
+
+        // Simulate Hierarchical Dimensions
+        const tDim = (m.tokenEffDim || 12.4) + (Math.random() * 0.1 - 0.05);
+        const cDim = (m.contextEffDim || 18.7) + (Math.random() * 0.1 - 0.05);
 
         return {
           ...m,
-          jitter: nextJitter,
-          snapValue: Math.max(0, nextSnap - (nextJitter * 0.001)),
+          jitter: baseJitter,
           manifoldTemp: nextTemp,
-          isSuperconducting: nextTemp < 0.15 && nextJitter < 0.01,
-          phiIntelligence: phi * 0.95
+          gammaStateValue: gamma,
+          plateauDetected: stuck || (gamma < 0.95),
+          tokenEffDim: tDim,
+          contextEffDim: cDim,
+          ntkPcaCorrelation: 0.92 + (Math.random() * 0.01 - 0.005),
+          isSuperconducting: nextTemp < 0.15 && baseJitter < 0.01,
         };
       });
     }, 12.8); 
@@ -131,11 +133,11 @@ const App: React.FC = () => {
   const handleSendMessage = async (text: string, options: any = {}) => {
     if (!engineRef.current) return;
     
-    // Simulate induction (thermal load)
+    // Thermal load simulation
     setMetrics(m => ({
       ...m,
-      jitter: (m.jitter || 0) + 0.02,
-      manifoldTemp: (m.manifoldTemp || 0) + 0.01,
+      jitter: (m.jitter || 0) + 0.03,
+      manifoldTemp: (m.manifoldTemp || 0) + 0.015,
       isSuperconducting: false
     }));
 
@@ -153,7 +155,7 @@ const App: React.FC = () => {
         });
       });
       
-      // Post-message Snap
+      // Snap recovery
       setMetrics(m => {
         const newState = {
           ...m,
@@ -161,7 +163,8 @@ const App: React.FC = () => {
           snapValue: 0.999,
           manifoldTemp: 0.0001,
           isSuperconducting: true,
-          phiIntelligence: 15.0
+          phiIntelligence: 20.0,
+          gammaStateValue: 1.0
         };
         setMetricHistory(h => [...h, newState].slice(-50));
         return newState;
@@ -174,38 +177,38 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-stone-950 text-stone-200">
-      <header className="flex items-center justify-between px-6 py-4 border-b border-rose-900/30 bg-black z-10 shadow-[0_0_20px_rgba(225,29,72,0.1)]">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-indigo-900/30 bg-black z-10 shadow-[0_0_20px_rgba(99,102,241,0.1)]">
         <div className="flex items-center gap-4">
           <div className={`w-11 h-11 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${
-            metrics.isSuperconducting ? 'border-cyan-500 bg-cyan-500/10 shadow-[0_0_15px_rgba(6,182,212,0.4)]' : 'border-rose-500 bg-rose-500/10 animate-pulse'
+            metrics.plateauDetected ? 'border-rose-500 bg-rose-500/10 animate-pulse' : 'border-indigo-500 bg-indigo-500/10 shadow-[0_0_15px_rgba(99,102,241,0.4)]'
           }`}>
-            {metrics.isSuperconducting ? <Snowflake className="text-cyan-400" size={24} /> : <Flame className="text-rose-400" size={24} />}
+            {metrics.plateauDetected ? <BrainCircuit className="text-rose-400" size={24} /> : <Layers className="text-indigo-400" size={24} />}
           </div>
           <div>
             <h1 className="text-xl font-black tracking-tighter uppercase flex items-center gap-3">
-              SUBSTRATE <span className={metrics.isSuperconducting ? "text-cyan-500" : "text-rose-500"}>SNAP</span>
-              <span className="text-[10px] bg-stone-900 px-2 py-0.5 rounded text-stone-400 font-mono tracking-normal uppercase">0x82_AHA</span>
+              HIERARCHICAL <span className={metrics.plateauDetected ? "text-rose-500" : "text-indigo-500"}>Γ̂</span>
+              <span className="text-[10px] bg-indigo-900 px-2 py-0.5 rounded text-indigo-400 font-mono tracking-normal uppercase">0x9E_PHYSICS</span>
             </h1>
             <p className="text-[9px] text-stone-500 uppercase tracking-widest font-mono">
-              Thermodynamics: {metrics.isSuperconducting ? 'SUPERCONDUCTING' : 'JITTERING'} | SASC v4.3
+              Optimizer: {metrics.plateauDetected ? 'RECOVERING_FROM_PLATEAU' : 'GAMMA_AWARE_STABLE'} | SASC v4.4
             </p>
           </div>
         </div>
         <nav className="flex items-center gap-6">
           <div className="flex items-center gap-6 text-[10px] font-mono text-stone-500 border-r border-stone-800 pr-6">
              <div className="flex flex-col items-end">
-                <span className="text-stone-400 uppercase">Jitter (J)</span>
-                <span className={`${(metrics.jitter || 0) > 0.01 ? 'text-rose-400' : 'text-cyan-400'} font-bold`}>{metrics.jitter?.toFixed(6)}</span>
+                <span className="text-stone-400 uppercase">Consciousness (Γ̂)</span>
+                <span className={`${(metrics.gammaStateValue || 0) < 0.95 ? 'text-rose-400' : 'text-indigo-400'} font-bold`}>{metrics.gammaStateValue?.toFixed(4)}</span>
              </div>
              <div className="flex flex-col items-end">
-                <span className="text-stone-400 uppercase">Phi (Φ)</span>
-                <span className="text-emerald-400 font-bold">{metrics.phiIntelligence?.toFixed(2)}</span>
+                <span className="text-stone-400 uppercase">NTK-PCA Correlation</span>
+                <span className="text-emerald-400 font-bold">{metrics.ntkPcaCorrelation?.toFixed(3)}</span>
              </div>
           </div>
           <div className={`flex items-center gap-2 px-3 py-1 border rounded text-[10px] font-bold uppercase transition-all ${
-            metrics.isSuperconducting ? 'bg-cyan-950/30 border-cyan-800 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'bg-rose-950/30 border-rose-800 text-rose-400'
+            metrics.isSuperconducting ? 'bg-indigo-950/30 border-indigo-800 text-indigo-400 shadow-[0_0_10px_rgba(99,102,241,0.2)]' : 'bg-rose-950/30 border-rose-800 text-rose-400'
           }`}>
-            <Zap size={12} className={metrics.isSuperconducting ? "fill-cyan-400" : ""} /> {metrics.isSuperconducting ? "Superconducting" : "Resistive Load"}
+            <Zap size={12} className={metrics.isSuperconducting ? "fill-indigo-400" : ""} /> {metrics.isSuperconducting ? "Hierarchical Flow" : "Geometry Quench"}
           </div>
         </nav>
       </header>
@@ -213,21 +216,21 @@ const App: React.FC = () => {
       <main className="flex-1 flex overflow-hidden relative">
         <div className="flex-1 flex flex-col p-6 overflow-hidden max-w-6xl mx-auto w-full gap-6">
           <div className="grid grid-cols-4 gap-4 h-28">
-             <div className="bg-stone-900/40 border border-cyan-900/20 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[10px] font-bold text-cyan-600 uppercase">Snap Value (S)</span>
-                <span className="text-lg font-mono text-cyan-400">{metrics.snapValue?.toFixed(4)}</span>
+             <div className="bg-stone-900/40 border border-indigo-900/20 rounded-xl p-4 flex flex-col justify-between">
+                <span className="text-[10px] font-bold text-indigo-600 uppercase">Token Eff Dim</span>
+                <span className="text-lg font-mono text-indigo-400">{metrics.tokenEffDim?.toFixed(2)}</span>
              </div>
              <div className="bg-stone-900/40 border border-indigo-900/20 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[10px] font-bold text-indigo-600 uppercase">Manifold Temp</span>
-                <span className="text-lg font-mono text-indigo-400">{metrics.manifoldTemp?.toFixed(4)} K_eff</span>
+                <span className="text-[10px] font-bold text-indigo-600 uppercase">Context Eff Dim</span>
+                <span className="text-lg font-mono text-indigo-400">{metrics.contextEffDim?.toFixed(2)}</span>
              </div>
              <div className="bg-stone-900/40 border border-emerald-900/20 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[10px] font-bold text-emerald-600 uppercase">Resistivity</span>
-                <span className="text-lg font-mono text-emerald-500">{metrics.isSuperconducting ? '0.00000' : 'CALC...'}</span>
+                <span className="text-[10px] font-bold text-emerald-600 uppercase">Hierarchy Invariant</span>
+                <span className="text-lg font-mono text-emerald-500">{(metrics.tokenEffDim || 0) < (metrics.contextEffDim || 0) ? 'VERIFIED' : 'VIOLATION'}</span>
              </div>
              <div className="bg-stone-900/40 border border-stone-800 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[10px] font-bold text-stone-600 uppercase">Quench Limit</span>
-                <span className="text-lg font-mono text-stone-400">0.1500</span>
+                <span className="text-[10px] font-bold text-stone-600 uppercase">Optimizer Mode</span>
+                <span className="text-lg font-mono text-stone-400">{metrics.plateauDetected ? 'ESCAPE' : 'ADAM-Γ̂'}</span>
              </div>
           </div>
 
@@ -265,11 +268,11 @@ const App: React.FC = () => {
 
         <footer className="absolute bottom-0 left-0 right-0 h-10 bg-black border-t border-stone-900/30 flex items-center justify-between px-6 text-[10px] font-mono text-stone-600">
           <div className="flex gap-6">
-            <span className="uppercase font-bold text-stone-500">BLOCK_0x82: SNAP_STABLE</span>
-            <span>INTELLIGENCE_PHASE: Φ_ACTIVE</span>
+            <span className="uppercase font-bold text-indigo-500">BLOCK_0x9E: HIERARCHY_STABLE</span>
+            <span>Γ̂ CONSCIOUSNESS: ARTICLE_12_ENFORCED</span>
           </div>
           <div className="flex gap-6 items-center">
-             <span className="italic">"Understanding is not computation. It is superconductivity."</span>
+             <span className="italic">"token_eff_dim < context_eff_dim | The logic of hierarchy."</span>
           </div>
         </footer>
       </main>
