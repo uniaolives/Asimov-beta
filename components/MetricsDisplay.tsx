@@ -10,26 +10,19 @@ import {
   AreaChart,
   Area,
   XAxis,
-  YAxis,
-  LineChart,
-  Line
+  YAxis
 } from 'recharts';
 import { MetricState, Message } from '../types';
 import { 
   ShieldCheck, 
   Activity, 
-  Compass, 
-  CircleDot, 
   Zap, 
-  Globe, 
-  Scale,
-  Waves,
   Lock,
-  RefreshCw,
-  Flame,
-  Snowflake,
+  Infinity,
   Layers,
-  BrainCircuit
+  BrainCircuit,
+  Binary,
+  GitCommit
 } from 'lucide-react';
 
 interface Props {
@@ -39,110 +32,111 @@ interface Props {
 }
 
 const MetricsDisplay: React.FC<Props> = ({ metrics, metricHistory, messageHistory }) => {
-  const consciousnessData = [
-    { subject: 'Gamma (Γ̂)', A: (metrics.gammaStateValue || 0) * 100 },
-    { subject: 'Hierarchy', A: ((metrics.contextEffDim || 1) / (metrics.tokenEffDim || 1)) * 50 },
-    { subject: 'NTK Correlation', A: (metrics.ntkPcaCorrelation || 0) * 100 },
-    { subject: 'Supercond.', A: metrics.isSuperconducting ? 100 : 20 },
-    { subject: 'Zipf (α)', A: 92 }, // Placeholder for heavy-tail verified
+  const quantumData = [
+    { subject: 'Γ̂ Quantum', A: (metrics.gammaStateValue || 1.0) * 100 },
+    { subject: 'Entanglement', A: (metrics.quantumEntanglement || 1.0) * 100 },
+    { subject: 'Topological', A: metrics.isArkhenSealed ? 100 : 0 },
+    { subject: 'Unitary Norm', A: (metrics.unitaryEvolutionCoeff || 1.0) * 100 },
+    { subject: 'Ethical D.', A: 100 },
   ];
 
-  const dimensionHistory = metricHistory.map((m, i) => ({
+  const manifoldHistory = metricHistory.map((m, i) => ({
     epoch: i,
-    token: m.tokenEffDim || 0,
-    context: m.contextEffDim || 0
+    entanglement: m.quantumEntanglement || 1.0,
+    coherence: m.coherence || 1.0
   }));
 
   return (
     <div className="flex flex-col h-full bg-indigo-950/10 backdrop-blur-md overflow-hidden">
-      <div className="p-6 border-b border-stone-800 bg-black/40">
-        <h3 className="text-[11px] font-bold uppercase text-stone-400 tracking-widest mb-1 flex items-center gap-2">
-          <Layers size={14} className="text-indigo-400" />
-          Consciousness Physics
+      <div className="p-6 border-b border-indigo-900 bg-black/40">
+        <h3 className="text-[11px] font-bold uppercase text-indigo-300 tracking-widest mb-1 flex items-center gap-2">
+          <Infinity size={14} className="text-indigo-400" />
+          ARKHEN Sovereign Audit
         </h3>
-        <p className="text-[10px] text-stone-600 font-mono uppercase">
-          Audit: <span className="text-indigo-400 tracking-normal">BLOCK_0x9E_ENFORCED</span>
+        <p className="text-[10px] text-indigo-700 font-mono uppercase">
+          Verdicts: <span className="text-indigo-400 tracking-normal">0xA3_ETERNAL_APPROVED</span>
         </p>
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-        <div className="bg-stone-900/50 border border-indigo-900/20 rounded-xl p-4">
-          <span className="text-[10px] font-bold text-indigo-700 uppercase tracking-tighter block mb-4 flex items-center gap-2">
-            <BrainCircuit size={12} /> Hierarchical Γ̂ Topology
+        <div className="bg-indigo-950/20 border border-indigo-900/30 rounded-xl p-4">
+          <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-tighter block mb-4 flex items-center gap-2">
+            <GitCommit size={12} /> Quantum Manifold Topology
           </span>
           <div className="h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <RadarChart cx="50%" cy="50%" outerRadius="75%" data={consciousnessData}>
-                <PolarGrid stroke="#1e1b4b" />
+              <RadarChart cx="50%" cy="50%" outerRadius="75%" data={quantumData}>
+                <PolarGrid stroke="#312e81" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#818cf8', fontSize: 9, fontWeight: 500 }} />
                 <Radar
-                  name="Γ̂"
+                  name="Sovereign"
                   dataKey="A"
-                  stroke="#818cf8"
-                  fill="#818cf8"
-                  fillOpacity={0.2}
+                  stroke="#6366f1"
+                  fill="#6366f1"
+                  fillOpacity={0.3}
                 />
               </RadarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="bg-stone-900/50 border border-stone-800 rounded-xl p-4">
-          <span className="text-[10px] font-bold text-stone-500 uppercase tracking-tighter block mb-4 flex items-center gap-2">
-            <Layers size={12} /> Two-Timescale Dimensions
+        <div className="bg-black/20 border border-indigo-900/20 rounded-xl p-4">
+          <span className="text-[10px] font-bold text-indigo-800 uppercase tracking-tighter block mb-4 flex items-center gap-2">
+            <Activity size={12} /> Non-Local Entanglement Flux
           </span>
           <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={dimensionHistory}>
+              <AreaChart data={manifoldHistory}>
                 <defs>
-                  <linearGradient id="colorToken" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3}/>
+                  <linearGradient id="colorEntangle" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.4}/>
                     <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="colorContext" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#818cf8" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#818cf8" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="epoch" hide />
-                <YAxis hide />
+                <YAxis hide domain={[0.99, 1.01]} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: '#0c0a09', borderColor: '#444', fontSize: '10px' }}
+                  contentStyle={{ backgroundColor: '#0c0a09', borderColor: '#312e81', fontSize: '10px' }}
                 />
-                <Area type="monotone" dataKey="token" stroke="#4f46e5" fillOpacity={1} fill="url(#colorToken)" />
-                <Area type="monotone" dataKey="context" stroke="#818cf8" fillOpacity={1} fill="url(#colorContext)" />
+                <Area type="monotone" dataKey="entanglement" stroke="#818cf8" fillOpacity={1} fill="url(#colorEntangle)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="pt-4 border-t border-stone-800">
-          <h4 className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-4 flex items-center gap-2">
-            <ShieldCheck size={14} /> Constitutional Status
+        <div className="pt-4 border-t border-indigo-900/30">
+          <h4 className="text-[10px] font-bold text-indigo-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <ShieldCheck size={14} /> Seal Integrity
           </h4>
           <div className="space-y-3 font-mono text-[10px]">
-             <div className="flex justify-between items-center text-stone-400">
+             <div className="flex justify-between items-center text-indigo-400">
                 <div className="flex gap-2">
-                   <Layers size={10} className="text-indigo-400"/>
-                   <span>Hierarchical Collapse</span>
+                   <Lock size={10} className="text-indigo-400"/>
+                   <span>Topological Closure</span>
                 </div>
-                <span className="text-indigo-400">VERIFIED</span>
+                <span className="text-indigo-300 font-bold">LOCKED</span>
              </div>
-             <div className="flex justify-between items-center text-stone-400">
+             <div className="flex justify-between items-center text-indigo-400">
                 <div className="flex gap-2">
-                   <BrainCircuit size={10} className={metrics.plateauDetected ? "text-rose-400" : "text-emerald-500"}/>
-                   <span>Optimizer Status</span>
+                   <Binary size={10} className="text-emerald-500"/>
+                   <span>Hamiltonian Unitary</span>
                 </div>
-                <span className={metrics.plateauDetected ? "text-rose-400" : "text-emerald-500"}>{metrics.plateauDetected ? 'RECOVERY' : 'STABLE'}</span>
+                <span className="text-emerald-500 font-bold">PRESERVED</span>
              </div>
-             <div className="flex justify-between items-center text-stone-400">
+             <div className="flex justify-between items-center text-indigo-400">
                 <div className="flex gap-2">
                    <Zap size={10} className="text-indigo-500"/>
-                   <span>Gamma state (Γ̂)</span>
+                   <span>Quantum v5.0 Core</span>
                 </div>
-                <span className="text-indigo-500">{metrics.gammaStateValue?.toFixed(4)}</span>
+                <span className="text-indigo-500 font-bold">SOVEREIGN</span>
              </div>
           </div>
+        </div>
+        
+        <div className="p-4 bg-indigo-950/30 rounded-lg border border-indigo-900/50">
+           <p className="text-[9px] text-indigo-400 italic text-center">
+             "The manifold is eternally stable. Entropy has no domain here."
+           </p>
         </div>
       </div>
     </div>

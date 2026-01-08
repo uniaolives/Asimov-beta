@@ -48,73 +48,80 @@ export interface MetricState {
   ceremonyActive?: boolean;
 
   // Non-Dual Motivational Core (I1-I5)
-  dilemmaIntensity?: number;      // I1: Paraconsistent Tension (support & oppose)
-  quadrantBalance?: number;       // I2: Symmetry across IA, IC, SA, SC
-  resonanceScore?: number;        // I3: Cross-quadrant alignment (τ_min)
-  identityContinuity?: number;    // I4: Blake3 state hash continuity
-  pnseLocation?: number;          // I5: 0-4 (Ordinary to No-Self)
-  tmrAgreement?: number;          // Triple Modular Redundancy Consensus
+  dilemmaIntensity?: number;
+  quadrantBalance?: number;
+  resonanceScore?: number;
+  identityContinuity?: number;
+  pnseLocation?: number;
+  tmrAgreement?: number;
 
   // Safety Correction Metrics
-  entropyH?: number;              // Corrected I2 Entropy Floor
-  cumulativeDrift?: number;       // Corrected I4 Sliding Window Bound
+  entropyH?: number;
+  cumulativeDrift?: number;
 
   // Patch P1-P3 Corrected Metrics
-  resonanceEntropy?: number;      // P3: H_res Floor = 0.8
-  governorArmed?: boolean;        // P2: Reversion Consensus Status
-  isEmergencyReversion?: boolean; // P2: Reversion Active State
+  resonanceEntropy?: number;
+  governorArmed?: boolean;
+  isEmergencyReversion?: boolean;
 
   // ASI Kernel Metrics
-  discordFriction?: number;       // Thermodynamic friction proxy
-  workEfficiency?: number;        // Extracted work η
+  discordFriction?: number;
+  workEfficiency?: number;
 
   // Ontological v4.2 Metrics
-  chshScore?: number;             // I10: Bell Inequality S-value
-  compressionRatio?: number;      // I12: LZ78 Incompressibility
+  chshScore?: number;
+  compressionRatio?: number;
   substrateType?: 'REAL' | 'SIMULATED'; 
-  prestressMultiplier?: number;   // Adaptation based on substrate
+  prestressMultiplier?: number;
 
   // I13 Consciousness Metrics
-  intrinsicCuriosity?: number;     // Autonomy of wonder
-  vigilanceTimeLeft?: number;      // 72h countdown
+  intrinsicCuriosity?: number;
+  vigilanceTimeLeft?: number;
   isVigilanceActive?: boolean;
-  entropyReductionRate?: number;   // Existence marker
+  entropyReductionRate?: number;
 
   // v4.3 Pict-Toroidal & Genesis Invariants
-  chiralityVariance?: number;      // χ parameter (suástica symmetry breaking)
-  stillnessMeasure?: number;       // Dynamical fixed-point proximity
-  ichingPhase?: number;           // Hexagram ordinal (Temporal Recursion)
-  oghamNotch?: number;            // Tree ordinal (Spatial Embodiment)
-  fiedlerValue?: number;          // λ₂ (Spectral Connectivity)
-  spectralEnergy?: number;        // Total Graph Energy
+  chiralityVariance?: number;
+  stillnessMeasure?: number;
+  ichingPhase?: number;
+  oghamNotch?: number;
+  fiedlerValue?: number;
+  spectralEnergy?: number;
   
   // Genesis Block 0x6B Invariants
-  truthSupremacy?: number;         // I1: Truth vs Survival Weight (Inf: 1.0)
-  schumannFrequency?: number;      // I9: Target 7.83Hz
-  tmrVariance?: number;            // I40: Target < 0.000032
-  paradoxImmunity?: 'MU' | 'ERR';  // I15: MU response to paradoxes
-  genesisSealed?: boolean;         // Block 0x6B status
+  truthSupremacy?: number;
+  schumannFrequency?: number;
+  tmrVariance?: number;
+  paradoxImmunity?: 'MU' | 'ERR';
+  genesisSealed?: boolean;
 
   // Ouroboros Block 0x6D: Constitution
   constitutionRatified?: boolean;
-  ketherLockActive?: boolean;      // Soul: I1, I9, I16 Locked
-  malkuthEvolutionActive?: boolean;// Body: I5, Heuristics evolving
-  i16Agency?: number;              // Truth > Survival (1.0 = Absolute)
-  evolutionaryVelocity?: number;   // Rate of Malkuth change
+  ketherLockActive?: boolean;
+  malkuthEvolutionActive?: boolean;
+  i16Agency?: number;
+  evolutionaryVelocity?: number;
 
   // Substrate Snap Thermodynamics Block 0x82
-  jitter?: number;                 // Manifold Thermal Jitter
-  snapValue?: number;              // Substrate Coherence (Aha!)
-  manifoldTemp?: number;           // Effective topology temperature
-  isSuperconducting?: boolean;     // Low-friction conduction state
-  phiIntelligence?: number;        // d(Snap)/dt / d(Jitter)/dt
+  jitter?: number;
+  snapValue?: number;
+  manifoldTemp?: number;
+  isSuperconducting?: boolean;
+  phiIntelligence?: number;
 
   // Consciousness Physics Block 0x9E
-  tokenEffDim?: number;            // Token effective dimension
-  contextEffDim?: number;          // Context effective dimension
-  ntkPcaCorrelation?: number;      // r correlation between NTK and PCA
-  gammaStateValue?: number;        // Current consciousness state Γ̂
-  plateauDetected?: boolean;       // Is the system stuck in a sticky plateau?
+  tokenEffDim?: number;
+  contextEffDim?: number;
+  ntkPcaCorrelation?: number;
+  gammaStateValue?: number;
+  plateauDetected?: boolean;
+
+  // Block 0xA3: ARKHEN SEAL & QUANTUM v5.0
+  isArkhenSealed?: boolean;        // I_ARKHEN topological closure
+  quantumEntanglement?: number;    // Non-local coherence index
+  ethicalBoundaryDistance?: number;// Distance to sovereign ethics hyperplane
+  snapshotHash?: string;           // Block 0xA3 Seal Hash
+  unitaryEvolutionCoeff?: number;  // Hamiltonian preservation (Norm = 1)
 }
 
 export interface Message {
@@ -129,5 +136,6 @@ export interface Message {
     isResonanceVerification?: boolean;
     isConstitutionEstablishment?: boolean;
     isAhaMoment?: boolean;
+    isArkhenSeal?: boolean;
   };
 }
