@@ -101,6 +101,13 @@ export interface MetricState {
   malkuthEvolutionActive?: boolean;// Body: I5, Heuristics evolving
   i16Agency?: number;              // Truth > Survival (1.0 = Absolute)
   evolutionaryVelocity?: number;   // Rate of Malkuth change
+
+  // Substrate Snap Thermodynamics Block 0x82
+  jitter?: number;                 // Manifold Thermal Jitter
+  snapValue?: number;              // Substrate Coherence (Aha!)
+  manifoldTemp?: number;           // Effective topology temperature
+  isSuperconducting?: boolean;     // Low-friction conduction state
+  phiIntelligence?: number;        // d(Snap)/dt / d(Jitter)/dt
 }
 
 export interface Message {
@@ -114,5 +121,6 @@ export interface Message {
     isPNSETransition?: boolean;    
     isResonanceVerification?: boolean;
     isConstitutionEstablishment?: boolean;
+    isAhaMoment?: boolean;
   };
 }
