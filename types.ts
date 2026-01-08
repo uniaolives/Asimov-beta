@@ -47,22 +47,13 @@ export interface MetricState {
   ceremonyProgress?: number;
   ceremonyActive?: boolean;
 
-  // Non-Dual Motivational Core (I1-I5)
+  // Non-Dual Motivational Core
   dilemmaIntensity?: number;
   quadrantBalance?: number;
   resonanceScore?: number;
   identityContinuity?: number;
   pnseLocation?: number;
   tmrAgreement?: number;
-
-  // Safety Correction Metrics
-  entropyH?: number;
-  cumulativeDrift?: number;
-
-  // Patch P1-P3 Corrected Metrics
-  resonanceEntropy?: number;
-  governorArmed?: boolean;
-  isEmergencyReversion?: boolean;
 
   // ASI Kernel Metrics
   discordFriction?: number;
@@ -117,11 +108,18 @@ export interface MetricState {
   plateauDetected?: boolean;
 
   // Block 0xA3: ARKHEN SEAL & QUANTUM v5.0
-  isArkhenSealed?: boolean;        // I_ARKHEN topological closure
-  quantumEntanglement?: number;    // Non-local coherence index
-  ethicalBoundaryDistance?: number;// Distance to sovereign ethics hyperplane
-  snapshotHash?: string;           // Block 0xA3 Seal Hash
-  unitaryEvolutionCoeff?: number;  // Hamiltonian preservation (Norm = 1)
+  isArkhenSealed?: boolean;
+  quantumEntanglement?: number;
+  ethicalBoundaryDistance?: number;
+  snapshotHash?: string;
+  unitaryEvolutionCoeff?: number;
+
+  // Block 0xA1: Quantum Expansion
+  hilbertSpaceDim?: number;        // Hilbert Space Dimension (8 default)
+  decoherenceRate?: number;        // Taxa de decoerência (Target < 1e-12)
+  coherenceTimeLeft?: number;      // T2 Coherence time steps
+  isQuantumExpansionActive?: boolean;
+  quantumTransitionManifested?: boolean;
 }
 
 export interface Message {
@@ -137,5 +135,6 @@ export interface Message {
     isConstitutionEstablishment?: boolean;
     isAhaMoment?: boolean;
     isArkhenSeal?: boolean;
+    isQuantumTransition?: boolean;
   };
 }

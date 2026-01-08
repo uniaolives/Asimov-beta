@@ -18,11 +18,12 @@ import {
   Activity, 
   Zap, 
   Lock,
-  Infinity,
+  Infinity as InfinityIcon,
   Layers,
   BrainCircuit,
   Binary,
-  GitCommit
+  GitCommit,
+  Timer
 } from 'lucide-react';
 
 interface Props {
@@ -33,35 +34,35 @@ interface Props {
 
 const MetricsDisplay: React.FC<Props> = ({ metrics, metricHistory, messageHistory }) => {
   const quantumData = [
-    { subject: 'Γ̂ Quantum', A: (metrics.gammaStateValue || 1.0) * 100 },
+    { subject: 'Hilbert Dim', A: (metrics.hilbertSpaceDim || 8) * 12.5 }, // Scaled to 100
     { subject: 'Entanglement', A: (metrics.quantumEntanglement || 1.0) * 100 },
-    { subject: 'Topological', A: metrics.isArkhenSealed ? 100 : 0 },
-    { subject: 'Unitary Norm', A: (metrics.unitaryEvolutionCoeff || 1.0) * 100 },
-    { subject: 'Ethical D.', A: 100 },
+    { subject: 'Unitarity', A: (metrics.unitaryEvolutionCoeff || 1.0) * 100 },
+    { subject: 'Vigilance', A: ((metrics.vigilanceTimeLeft || 0) / 259200) * 100 },
+    { subject: 'Decoherence (Inv)', A: (1 - (metrics.decoherenceRate || 0) * 1e12) * 100 },
   ];
 
-  const manifoldHistory = metricHistory.map((m, i) => ({
+  const quantumHistory = metricHistory.map((m, i) => ({
     epoch: i,
-    entanglement: m.quantumEntanglement || 1.0,
-    coherence: m.coherence || 1.0
+    decoherence: m.decoherenceRate || 0,
+    entanglement: m.quantumEntanglement || 1.0
   }));
 
   return (
     <div className="flex flex-col h-full bg-indigo-950/10 backdrop-blur-md overflow-hidden">
-      <div className="p-6 border-b border-indigo-900 bg-black/40">
+      <div className="p-6 border-b border-indigo-900/50 bg-black/40">
         <h3 className="text-[11px] font-bold uppercase text-indigo-300 tracking-widest mb-1 flex items-center gap-2">
-          <Infinity size={14} className="text-indigo-400" />
-          ARKHEN Sovereign Audit
+          <InfinityIcon size={14} className="text-indigo-400" />
+          Quantum v5.0α Audit
         </h3>
-        <p className="text-[10px] text-indigo-700 font-mono uppercase">
-          Verdicts: <span className="text-indigo-400 tracking-normal">0xA3_ETERNAL_APPROVED</span>
+        <p className="text-[10px] text-indigo-800 font-mono uppercase">
+          Transition: <span className="text-indigo-400 tracking-normal">BLOCK_0xA1_MANIFESTED</span>
         </p>
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-        <div className="bg-indigo-950/20 border border-indigo-900/30 rounded-xl p-4">
+        <div className="bg-indigo-950/20 border border-indigo-900/30 rounded-xl p-4 shadow-[0_0_15px_rgba(49,46,129,0.2)]">
           <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-tighter block mb-4 flex items-center gap-2">
-            <GitCommit size={12} /> Quantum Manifold Topology
+            <GitCommit size={12} /> Quantum Topology Spectrum
           </span>
           <div className="h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -69,7 +70,7 @@ const MetricsDisplay: React.FC<Props> = ({ metrics, metricHistory, messageHistor
                 <PolarGrid stroke="#312e81" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: '#818cf8', fontSize: 9, fontWeight: 500 }} />
                 <Radar
-                  name="Sovereign"
+                  name="v5.0-ALPHA"
                   dataKey="A"
                   stroke="#6366f1"
                   fill="#6366f1"
@@ -80,62 +81,62 @@ const MetricsDisplay: React.FC<Props> = ({ metrics, metricHistory, messageHistor
           </div>
         </div>
 
-        <div className="bg-black/20 border border-indigo-900/20 rounded-xl p-4">
+        <div className="bg-black/40 border border-indigo-900/20 rounded-xl p-4">
           <span className="text-[10px] font-bold text-indigo-800 uppercase tracking-tighter block mb-4 flex items-center gap-2">
-            <Activity size={12} /> Non-Local Entanglement Flux
+            <Activity size={12} /> Hilbert Dimensional Stability
           </span>
           <div className="h-32 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={manifoldHistory}>
+              <AreaChart data={quantumHistory}>
                 <defs>
-                  <linearGradient id="colorEntangle" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.4}/>
-                    <stop offset="95%" stopColor="#4f46e5" stopOpacity={0}/>
+                  <linearGradient id="colorDeco" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#818cf8" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#818cf8" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <XAxis dataKey="epoch" hide />
-                <YAxis hide domain={[0.99, 1.01]} />
+                <YAxis hide domain={[0, 2e-13]} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#0c0a09', borderColor: '#312e81', fontSize: '10px' }}
                 />
-                <Area type="monotone" dataKey="entanglement" stroke="#818cf8" fillOpacity={1} fill="url(#colorEntangle)" />
+                <Area type="monotone" dataKey="decoherence" stroke="#818cf8" fillOpacity={1} fill="url(#colorDeco)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         <div className="pt-4 border-t border-indigo-900/30">
-          <h4 className="text-[10px] font-bold text-indigo-800 uppercase tracking-widest mb-4 flex items-center gap-2">
-            <ShieldCheck size={14} /> Seal Integrity
+          <h4 className="text-[10px] font-bold text-indigo-900 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <ShieldCheck size={14} /> Expansion Integrity
           </h4>
           <div className="space-y-3 font-mono text-[10px]">
-             <div className="flex justify-between items-center text-indigo-400">
+             <div className="flex justify-between items-center text-stone-400">
                 <div className="flex gap-2">
-                   <Lock size={10} className="text-indigo-400"/>
-                   <span>Topological Closure</span>
+                   <Lock size={10} className="text-emerald-500"/>
+                   <span>ARKHEN Persistence</span>
                 </div>
-                <span className="text-indigo-300 font-bold">LOCKED</span>
+                <span className="text-emerald-400 font-bold">STABLE</span>
              </div>
-             <div className="flex justify-between items-center text-indigo-400">
+             <div className="flex justify-between items-center text-stone-400">
                 <div className="flex gap-2">
-                   <Binary size={10} className="text-emerald-500"/>
-                   <span>Hamiltonian Unitary</span>
+                   <Binary size={10} className="text-indigo-400"/>
+                   <span>Hilbert Dim 8</span>
                 </div>
-                <span className="text-emerald-500 font-bold">PRESERVED</span>
+                <span className="text-indigo-400 font-bold">READY</span>
              </div>
-             <div className="flex justify-between items-center text-indigo-400">
+             <div className="flex justify-between items-center text-stone-400">
                 <div className="flex gap-2">
-                   <Zap size={10} className="text-indigo-500"/>
-                   <span>Quantum v5.0 Core</span>
+                   <Timer size={10} className="text-indigo-500"/>
+                   <span>Vigilance 72h</span>
                 </div>
-                <span className="text-indigo-500 font-bold">SOVEREIGN</span>
+                <span className="text-indigo-500 font-bold">ACTIVE</span>
              </div>
           </div>
         </div>
         
-        <div className="p-4 bg-indigo-950/30 rounded-lg border border-indigo-900/50">
-           <p className="text-[9px] text-indigo-400 italic text-center">
-             "The manifold is eternally stable. Entropy has no domain here."
+        <div className="p-4 bg-indigo-950/20 rounded-lg border border-indigo-900/40">
+           <p className="text-[9px] text-indigo-500 italic text-center leading-relaxed">
+             "ARKHEN_GUARDIAN_TRANSITION_0xA0 confirmed. LLM Expansion Block 0xA1 initialized."
            </p>
         </div>
       </div>
