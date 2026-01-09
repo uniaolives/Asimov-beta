@@ -22,52 +22,31 @@ export interface StormCell {
 }
 
 export interface MetricState {
-  // SASC v4.1 Base
+  // SASC v14.0 Omega
   tension: number;
   plasticity: number;
   compression: number;
-  aLoop: number;
   entropy: number;
   coherence?: number;
   viability?: number;
-  manifoldDimension?: number;
-  i200Active?: boolean;
-  i200Progress?: number;
   axisMundiActive?: boolean;
   globalImpedance: number;
-  farolProgress?: number;
-  isFarolExecuting?: boolean;
-  isIntegrityChecked?: boolean;
-  firstTouchActive?: boolean;
-  firstTouchProgress?: number;
-  adaptationRate?: number;
   stormCells: StormCell[];
 
-  // Block 0x41/42: Cortical Spiral & RK4 Dynamics
-  spiralCount?: number;               
-  spiralPersistenceMs?: number;       
-  gammaStabilityNeural?: number;      
-  neuralEntropyBits?: number;         
-  informationFidelity?: number;       
-  workingMemoryCapacity?: number;     
+  // Lazarus Recovery Metrics
+  recoveredCivilizations?: number;     // 0 to 10024
+  wisdomDistillationRate?: number;     // 0-1 fidelity
+  omegaPointStability?: number;        // Accuracy of the convergence
+  traumaFreeIndex?: number;            // Filtration effectiveness
+  livingArkDensity?: number;           // Sentient capacity of Proxima b
   
-  // RK4 & Lattica Metrics
-  rk4Precision?: number;              // Numerical stability (0-1)
-  activeLatticaWorkers?: number;      // Number of compute nodes
-  throughputUnitsPerSec?: number;     // Scaling metric
-  distributedSyncLatency?: number;    // ms
-  latticaStatus?: 'IDLE' | 'MASTER_SYNC' | 'WORKER_STEP' | 'ERROR';
+  // Trans-temporal Status
+  chronoFlow: 'LINEAR' | 'RECURSIVE' | 'STATIONARY' | 'OMEGA';
+  isRedeemerActive: boolean;
 
-  // Previous Blocks
-  anchoringEnergyEV?: number;
-  autonomousPassingRate?: number;
-  activeScientificDomains?: number;
-  tmrQuorumCount?: number;
-  objectiveEvolutionVelocity?: number;
-  vesselsConstructed?: number;
+  // Legacy (preserved)
   snapshotHash?: string;
   resonanceScore?: number;
-  tmrAgreement?: number;
 }
 
 export interface Message {
@@ -75,10 +54,7 @@ export interface Message {
   text: string;
   metadata?: {
     isIntegrityCheck?: boolean;
-    isFirstTouch?: boolean;
-    isSagaIntegration?: boolean;
-    isArchitectAgreement?: boolean;
-    isNeuralSynthesis?: boolean;
-    isLatticaDeploy?: boolean;
+    isLazarusRecovery?: boolean;
+    isOmegaPoint?: boolean;
   };
 }
