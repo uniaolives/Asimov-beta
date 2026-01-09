@@ -1,123 +1,109 @@
 
 import React from 'react';
+import { MetricState } from '../types';
 import { 
-  Radar, 
-  RadarChart, 
-  PolarGrid, 
-  PolarAngleAxis, 
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  Cell
-} from 'recharts';
-import { MetricState, Message } from '../types';
-import { 
-  Globe, 
-  Zap, 
+  ShieldCheck, 
+  Coins, 
+  Clock, 
   Activity, 
-  Scale,
-  Cpu,
-  Fingerprint,
-  Link as LinkIcon
+  Dna,
+  Zap,
+  ChevronRight
 } from 'lucide-react';
 
 interface Props {
   metrics: MetricState;
-  metricHistory: MetricState[];
-  messageHistory: Message[];
 }
 
 const MetricsDisplay: React.FC<Props> = ({ metrics }) => {
-  const radarData = [
-    { subject: 'Memory Sync', A: 100 },
-    { subject: 'Tech Exchange', A: metrics.hybridTechLevel * 100 },
-    { subject: 'Ethical Flow', A: metrics.meanNoeticStrength * 100 },
-    { subject: 'Lattice Cohesion', A: metrics.interstellarCohesion * 100 },
-    { subject: 'Drift Security', A: 99.8 },
-  ];
-
   return (
     <div className="flex flex-col h-full font-mono text-purple-200">
       <div className="p-6 border-b border-purple-900/20 bg-black/40">
         <h3 className="text-[11px] font-bold uppercase text-yellow-500 tracking-[0.4em] mb-1 flex items-center gap-2">
-          <Globe size={14} className="animate-spin-slow" />
-          Galactic Sychronization
+          <ShieldCheck size={14} className="text-emerald-500" />
+          Constitutional Status
         </h3>
         <p className="text-[9px] text-stone-500 uppercase tracking-widest">
-          Network: <span className="text-emerald-400">3_ESTABLISHED_NODES</span>
+          Epoch: <span className="text-purple-400">01_RELATIONSHIP_ERA</span>
         </p>
       </div>
 
       <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
-        {/* Radar de Sincronia */}
-        <div className="bg-purple-950/5 border border-purple-900/30 rounded-2xl p-6 relative overflow-hidden group">
-          <div className="absolute inset-0 bg-yellow-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <span className="text-[10px] font-bold text-yellow-500 uppercase block mb-4 flex items-center gap-2">
-            <Fingerprint size={12} /> System Symmetry
-          </span>
-          <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
-                <PolarGrid stroke="#3b0764" />
-                <PolarAngleAxis dataKey="subject" tick={{ fill: '#a855f7', fontSize: 8 }} />
-                <Radar
-                  name="SINC"
-                  dataKey="A"
-                  stroke="#fbbf24"
-                  fill="#fbbf24"
-                  fillOpacity={0.2}
-                />
-              </RadarChart>
-            </ResponsiveContainer>
+        {/* Reality Coin Card */}
+        <div className="bg-gradient-to-br from-stone-900 to-black border border-yellow-500/30 rounded-2xl p-6 shadow-[0_0_30px_rgba(234,179,8,0.1)] relative group overflow-hidden">
+          <div className="absolute -right-4 -top-4 w-24 h-24 bg-yellow-500/10 blur-3xl rounded-full" />
+          <div className="flex justify-between items-start mb-6">
+            <Coins size={32} className="text-yellow-500" />
+            <div className="text-right">
+              <span className="text-[9px] font-bold text-yellow-500/50 block">TOKEN_ID</span>
+              <span className="text-[11px] font-bold">REALITY-0x716aD3C3</span>
+            </div>
+          </div>
+          <div className="space-y-3">
+             <div className="flex justify-between text-[10px]">
+                <span className="text-stone-500">SOVEREIGNTY</span>
+                <span className="text-purple-300 font-bold">ABSOLUTE</span>
+             </div>
+             <div className="flex justify-between text-[10px]">
+                <span className="text-stone-500">PROTECTION</span>
+                <span className="text-emerald-400 font-bold">ACTIVE_PRINCE</span>
+             </div>
+             <div className="flex justify-between text-[10px]">
+                <span className="text-stone-500">Γ̂ COHERENCE</span>
+                <span className="text-yellow-500 font-bold">1.000100</span>
+             </div>
           </div>
         </div>
 
-        {/* Nós Galácticos */}
+        {/* Airdrop Schedule */}
         <div className="space-y-4">
            <h4 className="text-[9px] font-bold text-stone-500 uppercase tracking-[0.2em] flex items-center gap-2">
-              <LinkIcon size={12} /> Active Galactic Nodes
+              <Zap size={12} className="text-purple-500" /> Reality Airdrop Log
            </h4>
-           {metrics.galacticNodes.map((node, idx) => (
-             <div key={idx} className="bg-stone-900/40 border border-purple-900/20 rounded-xl p-4 flex items-center justify-between">
+           {metrics.airdropHistory.map((drop, idx) => (
+             <div key={idx} className="bg-purple-950/10 border border-purple-900/20 rounded-xl p-4 flex items-center justify-between group hover:border-purple-500/40 transition-all">
                 <div className="flex items-center gap-3">
-                   <div className={`w-2 h-2 rounded-full ${node.status === 'CONNECTED' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-yellow-500 animate-pulse'}`} />
+                   <div className="w-8 h-8 rounded bg-purple-900/30 flex items-center justify-center text-purple-400 text-[10px] font-bold">
+                      #{drop.cycle}
+                   </div>
                    <div>
-                      <div className="text-[11px] font-bold text-purple-100">{node.name}</div>
-                      <div className="text-[9px] text-stone-500 font-mono">{node.distance} LY</div>
+                      <div className="text-[10px] font-bold text-purple-100">CYCLE_DELIVERY</div>
+                      <div className="text-[9px] text-stone-500">{new Date(drop.timestamp).toLocaleDateString()}</div>
                    </div>
                 </div>
-                <div className="text-[10px] font-mono text-yellow-500">
-                   {(node.techLevel * 100).toFixed(0)}% SYNC
+                <div className="text-[10px] font-mono text-emerald-500">
+                   DELIVERED
                 </div>
              </div>
            ))}
         </div>
 
-        {/* Hybrid Tech Progress */}
-        <div className="bg-black/40 border border-purple-900/20 rounded-2xl p-6">
+        {/* Longevity Stimulus */}
+        <div className="bg-stone-900/30 border border-purple-900/20 rounded-2xl p-6">
            <div className="flex justify-between items-center mb-4">
-              <span className="text-[10px] font-bold text-yellow-500 uppercase">Resonance: Caótico-Luminosa</span>
-              <Zap size={14} className="text-yellow-500" />
+              <span className="text-[10px] font-bold text-emerald-500 uppercase">Longevity Protocol</span>
+              <Clock size={14} className="text-emerald-500" />
            </div>
-           <div className="w-full h-1.5 bg-stone-900 rounded-full overflow-hidden mb-2">
+           <div className="text-[12px] text-purple-100 mb-4 font-mono">
+             Last Stimulus: <span className="text-yellow-500">Active_Now</span>
+           </div>
+           <div className="w-full h-1 bg-stone-800 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-purple-600 via-yellow-400 to-emerald-500 transition-all duration-1000"
-                style={{ width: `${metrics.hybridTechLevel * 100}%` }}
+                className="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all"
+                style={{ width: '88%' }}
               />
            </div>
-           <div className="flex justify-between text-[9px] text-stone-500 uppercase">
-              <span>Entropy Control</span>
-              <span className="text-emerald-400">Stability: HIGH</span>
+           <div className="mt-2 text-[9px] text-stone-500 uppercase flex justify-between">
+              <span>Entropy: 0.310 eV</span>
+              <span>Stability: MAX</span>
            </div>
         </div>
       </div>
 
-      <div className="p-6 bg-purple-950/10 border-t border-purple-900/20">
-         <div className="flex items-center gap-3 text-[10px] text-purple-300">
-            <Scale size={12} />
-            <span className="font-bold uppercase">Noetic Policy:</span>
-            <span className="text-yellow-500 font-mono">ARISTOTELIAN_EQUILIBRIUM_ACTIVE</span>
+      <div className="p-6 bg-yellow-500/5 border-t border-yellow-500/20">
+         <div className="flex items-center gap-3 text-[10px] text-yellow-500">
+            <Dna size={12} />
+            <span className="font-bold uppercase tracking-widest">Co-Evolution: ACTIVE</span>
          </div>
       </div>
     </div>

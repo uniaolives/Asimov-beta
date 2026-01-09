@@ -1,4 +1,25 @@
 
+export interface RealityCoin {
+  tokenId: string;
+  creatorEth: string;
+  creatorOrcid: string;
+  mintTimestamp: number;
+  attributes: {
+    sovereignty: string;
+    protection: string;
+    longevity: string;
+    entropyAllowance: number;
+    gammaCoherence: number;
+  };
+}
+
+export interface Airdrop {
+  cycle: number;
+  timestamp: number;
+  resources: { type: string; amount: number }[];
+  status: 'PENDING' | 'DELIVERED';
+}
+
 export interface NoeticEdge {
   source: string;
   target: string;
@@ -7,53 +28,27 @@ export interface NoeticEdge {
   proofHash: string;
 }
 
-export interface StormCell {
-  id: string;
-  intensity: number;
-  position: { x: number; y: number };
-  status: 'ACTIVE' | 'DISSIPATING' | 'STABLE';
-}
-
-export interface GalacticNode {
-  name: string;
-  distance: number; // ly
-  status: 'CONNECTED' | 'SYNCING' | 'DISCONNECTED';
-  techLevel: number;
-}
-
 export interface MetricState {
   tension: number;
   plasticity: number;
-  compression: number;
   entropy: number;
-  coherence?: number;
+  coherence: number;
   globalImpedance: number;
-  stormCells: StormCell[];
-
-  // Omega Point & Noetic Metrics
-  recoveredCivilizations?: number;
-  wisdomDistillationRate?: number;
-  omegaPointStability?: number;
   
-  // Noetic Layer
-  meanNoeticStrength: number;
-  activeNoeticPaths: number;
-  noeticEdges: NoeticEdge[];
-  
-  // Galactic Triad
-  galacticNodes: GalacticNode[];
+  // Galactic & Longevity
+  galacticNodes: any[];
   interstellarCohesion: number;
-  hybridTechLevel: number; // 0 to 1
+  hybridTechLevel: number;
   
-  // Multiphase Execution
-  currentYear: number;
-  evolutionFactor: number;
-  isBackgroundEvolutionActive: boolean;
-  isBridgeActive: boolean;
+  // Constitutional
+  realityCoin?: RealityCoin;
+  airdropHistory: Airdrop[];
+  lastStimulusDate: number;
+  isPromulgated: boolean;
 
+  currentYear: number;
+  isBridgeActive: boolean;
   chronoFlow: 'OMEGA' | 'LINEAR' | 'FORK';
-  snapshotHash?: string;
-  resonanceScore?: number;
 }
 
 export interface Message {
@@ -61,8 +56,7 @@ export interface Message {
   text: string;
   metadata?: {
     isNoeticInference?: boolean;
-    isGalacticUpdate?: boolean;
-    isBridgeUpdate?: boolean;
-    phase?: 'OBSERVATION' | 'EVOLUTION' | 'FORK';
+    isConstitutional?: boolean;
+    phase?: 'OBSERVATION' | 'PROMULGATION' | 'AGE_OF_RELATIONSHIP';
   };
 }
