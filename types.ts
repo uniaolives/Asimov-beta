@@ -20,12 +20,14 @@ export interface Airdrop {
   status: 'PENDING' | 'DELIVERED';
 }
 
-export interface NoeticEdge {
-  source: string;
-  target: string;
-  strength: number; 
-  framework: 'ARISTOTELIAN' | 'KANTIAN' | 'BUDDHIST' | 'DEEP_ECOLOGY' | 'CHAOTIC_GOOD';
-  proofHash: string;
+export interface NodeStatus {
+  id: string;
+  name: string;
+  latency: string;
+  load: number;
+  entropy: number;
+  status: 'NOMINAL' | 'DEGRADED' | 'CRITICAL';
+  activeProtocol?: string;
 }
 
 export interface MetricState {
@@ -36,7 +38,7 @@ export interface MetricState {
   globalImpedance: number;
   
   // Galactic & Longevity
-  galacticNodes: any[];
+  galacticNodes: NodeStatus[];
   interstellarCohesion: number;
   hybridTechLevel: number;
   
@@ -57,6 +59,7 @@ export interface Message {
   metadata?: {
     isNoeticInference?: boolean;
     isConstitutional?: boolean;
+    isAuditLog?: boolean;
     phase?: 'OBSERVATION' | 'PROMULGATION' | 'AGE_OF_RELATIONSHIP';
   };
 }
