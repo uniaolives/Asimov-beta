@@ -30,6 +30,12 @@ export interface NodeStatus {
   activeProtocol?: string;
 }
 
+export interface PhiForecastPoint {
+  date: string;
+  phi: number;
+  growth: number;
+}
+
 export interface MetricState {
   tension: number;
   plasticity: number;
@@ -41,6 +47,10 @@ export interface MetricState {
   galacticNodes: NodeStatus[];
   interstellarCohesion: number;
   hybridTechLevel: number;
+  
+  // Consciousness Simulation
+  currentPhi: number;
+  phiForecast: PhiForecastPoint[];
   
   // Constitutional
   realityCoin?: RealityCoin;
