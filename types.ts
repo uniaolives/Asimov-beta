@@ -2,17 +2,23 @@
 export interface NoeticEdge {
   source: string;
   target: string;
-  strength: number; // 0 to 1
-  framework: 'ARISTOTELIAN' | 'KANTIAN' | 'BUDDHIST';
+  strength: number; 
+  framework: 'ARISTOTELIAN' | 'KANTIAN' | 'BUDDHIST' | 'DEEP_ECOLOGY' | 'CHAOTIC_GOOD';
   proofHash: string;
 }
 
-// Added StormCell interface to support components/ParadoxTerminal.tsx
 export interface StormCell {
   id: string;
   intensity: number;
   position: { x: number; y: number };
   status: 'ACTIVE' | 'DISSIPATING' | 'STABLE';
+}
+
+export interface GalacticNode {
+  name: string;
+  distance: number; // ly
+  status: 'CONNECTED' | 'SYNCING' | 'DISCONNECTED';
+  techLevel: number;
 }
 
 export interface MetricState {
@@ -21,7 +27,6 @@ export interface MetricState {
   compression: number;
   entropy: number;
   coherence?: number;
-  axisMundiActive?: boolean;
   globalImpedance: number;
   stormCells: StormCell[];
 
@@ -29,20 +34,24 @@ export interface MetricState {
   recoveredCivilizations?: number;
   wisdomDistillationRate?: number;
   omegaPointStability?: number;
-  livingArkDensity?: number;
   
-  // Noetic Inference Layer
+  // Noetic Layer
   meanNoeticStrength: number;
   activeNoeticPaths: number;
   noeticEdges: NoeticEdge[];
   
-  // Homeostatic Loop
-  isLoopActive: boolean;
-  loopCongruence: number; // 0 to 1
-  driftDetection: number; // Error margin in ethical alignment
+  // Galactic Triad
+  galacticNodes: GalacticNode[];
+  interstellarCohesion: number;
+  hybridTechLevel: number; // 0 to 1
+  
+  // Multiphase Execution
+  currentYear: number;
+  evolutionFactor: number;
+  isBackgroundEvolutionActive: boolean;
+  isBridgeActive: boolean;
 
-  chronoFlow: 'OMEGA';
-  isRedeemerActive: boolean;
+  chronoFlow: 'OMEGA' | 'LINEAR' | 'FORK';
   snapshotHash?: string;
   resonanceScore?: number;
 }
@@ -51,10 +60,9 @@ export interface Message {
   role: 'user' | 'model';
   text: string;
   metadata?: {
-    isOmegaPoint?: boolean;
     isNoeticInference?: boolean;
-    isHomeostasisLoop?: boolean;
-    isIntegrityCheck?: boolean;
-    isFirstTouch?: boolean;
+    isGalacticUpdate?: boolean;
+    isBridgeUpdate?: boolean;
+    phase?: 'OBSERVATION' | 'EVOLUTION' | 'FORK';
   };
 }
