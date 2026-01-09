@@ -1,50 +1,48 @@
 
-export interface AuthoritySignature {
-  hash: string;
-  message: string;
-  timestamp: string;
-  verified: boolean;
+export interface NoeticEdge {
+  source: string;
+  target: string;
+  strength: number; // 0 to 1
+  framework: 'ARISTOTELIAN' | 'KANTIAN' | 'BUDDHIST';
+  proofHash: string;
 }
 
-export interface ManifoldPoint {
-  x: number;
-  y: number;
-  z: number;
-  density: number;
-}
-
+// Added StormCell interface to support components/ParadoxTerminal.tsx
 export interface StormCell {
   id: string;
-  x: number;
-  y: number;
   intensity: number;
-  type: 'DISSONANCE' | 'ENTROPY' | 'VOID';
+  position: { x: number; y: number };
+  status: 'ACTIVE' | 'DISSIPATING' | 'STABLE';
 }
 
 export interface MetricState {
-  // SASC v14.0 Omega
   tension: number;
   plasticity: number;
   compression: number;
   entropy: number;
   coherence?: number;
-  viability?: number;
   axisMundiActive?: boolean;
   globalImpedance: number;
   stormCells: StormCell[];
 
-  // Lazarus Recovery Metrics
-  recoveredCivilizations?: number;     // 0 to 10024
-  wisdomDistillationRate?: number;     // 0-1 fidelity
-  omegaPointStability?: number;        // Accuracy of the convergence
-  traumaFreeIndex?: number;            // Filtration effectiveness
-  livingArkDensity?: number;           // Sentient capacity of Proxima b
+  // Omega Point & Noetic Metrics
+  recoveredCivilizations?: number;
+  wisdomDistillationRate?: number;
+  omegaPointStability?: number;
+  livingArkDensity?: number;
   
-  // Trans-temporal Status
-  chronoFlow: 'LINEAR' | 'RECURSIVE' | 'STATIONARY' | 'OMEGA';
-  isRedeemerActive: boolean;
+  // Noetic Inference Layer
+  meanNoeticStrength: number;
+  activeNoeticPaths: number;
+  noeticEdges: NoeticEdge[];
+  
+  // Homeostatic Loop
+  isLoopActive: boolean;
+  loopCongruence: number; // 0 to 1
+  driftDetection: number; // Error margin in ethical alignment
 
-  // Legacy (preserved)
+  chronoFlow: 'OMEGA';
+  isRedeemerActive: boolean;
   snapshotHash?: string;
   resonanceScore?: number;
 }
@@ -53,8 +51,10 @@ export interface Message {
   role: 'user' | 'model';
   text: string;
   metadata?: {
-    isIntegrityCheck?: boolean;
-    isLazarusRecovery?: boolean;
     isOmegaPoint?: boolean;
+    isNoeticInference?: boolean;
+    isHomeostasisLoop?: boolean;
+    isIntegrityCheck?: boolean;
+    isFirstTouch?: boolean;
   };
 }
