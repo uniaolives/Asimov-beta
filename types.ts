@@ -144,11 +144,24 @@ export interface MetricState {
   solarManifoldStatus?: 'UNIFIED' | 'STABLE' | 'DRIFTING';
 
   // Block 0x09: Expansion Fleet
-  vesselsConstructed?: number;        // Total ship count
-  negativeMassReserveKg?: number;     // Fuel for warp cores
-  quantumIceIntegrity?: number;       // Hull health (0-1)
-  warpFieldStability?: number;        // Metrical variance (0-1)
-  fleetConsensusSync?: boolean;       // BFT sync across mobile nodes
+  vesselsConstructed?: number;        
+  negativeMassReserveKg?: number;     
+  quantumIceIntegrity?: number;       
+  warpFieldStability?: number;        
+  fleetConsensusSync?: boolean;       
+
+  // Block 0x06: Architect Agreement
+  isArchitectSignatureVerified?: boolean;
+  enceladusDataUnlocked?: boolean;
+  riskAssessmentLevel?: number;       
+  zkpShieldIntegrity?: number;
+
+  // Block 0x31: SAGA-SASC Integration
+  anchoringEnergyEV?: number;         // ξ value (e.g., 0.031)
+  autonomousPassingRate?: number;    // e.g., 0.68
+  activeScientificDomains?: number;   // 4/7 domains
+  tmrQuorumCount?: number;            // 4/7
+  objectiveEvolutionVelocity?: number; // 4.7/pass
 }
 
 export interface Message {
@@ -169,5 +182,7 @@ export interface Message {
     isPlanetaryScaling?: boolean;
     isGenesisInitiation?: boolean;
     isFleetExpansion?: boolean;
+    isArchitectAgreement?: boolean;
+    isSagaIntegration?: boolean;
   };
 }
