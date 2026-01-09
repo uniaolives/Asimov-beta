@@ -43,27 +43,29 @@ export interface MetricState {
   adaptationRate?: number;
   stormCells: StormCell[];
 
-  // Block 0x41: Cortical Spiral Dynamics
-  spiralCount?: number;               // Active neural spirals
-  spiralPersistenceMs?: number;       // Mean lifetime of tokens
-  gammaStabilityNeural?: number;      // Γ̂ neural coherence (target > 1.0001)
-  neuralEntropyBits?: number;         // ΔS in bits/ms
-  informationFidelity?: number;       // ΔI structural integrity
-  workingMemoryCapacity?: number;     // Active spiral tokens (4±1)
+  // Block 0x41/42: Cortical Spiral & RK4 Dynamics
+  spiralCount?: number;               
+  spiralPersistenceMs?: number;       
+  gammaStabilityNeural?: number;      
+  neuralEntropyBits?: number;         
+  informationFidelity?: number;       
+  workingMemoryCapacity?: number;     
   
-  // Previous Blocks preserved for state continuity
+  // RK4 & Lattica Metrics
+  rk4Precision?: number;              // Numerical stability (0-1)
+  activeLatticaWorkers?: number;      // Number of compute nodes
+  throughputUnitsPerSec?: number;     // Scaling metric
+  distributedSyncLatency?: number;    // ms
+  latticaStatus?: 'IDLE' | 'MASTER_SYNC' | 'WORKER_STEP' | 'ERROR';
+
+  // Previous Blocks
   anchoringEnergyEV?: number;
   autonomousPassingRate?: number;
   activeScientificDomains?: number;
   tmrQuorumCount?: number;
   objectiveEvolutionVelocity?: number;
   vesselsConstructed?: number;
-  isArchitectSignatureVerified?: boolean;
-  enceladusDataUnlocked?: boolean;
   snapshotHash?: string;
-  gammaStateValue?: number;
-
-  // Added properties used in initial state but missing from interface
   resonanceScore?: number;
   tmrAgreement?: number;
 }
@@ -77,5 +79,6 @@ export interface Message {
     isSagaIntegration?: boolean;
     isArchitectAgreement?: boolean;
     isNeuralSynthesis?: boolean;
+    isLatticaDeploy?: boolean;
   };
 }
