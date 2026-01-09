@@ -136,12 +136,19 @@ export interface MetricState {
   privacyIntegrityScore?: number;    
 
   // Block 0x00: Solar Genesis
-  epochHeight?: number;               // 0
-  merkleRootHash?: string;           // Root of reality
-  quorumSignaturesReceived?: number;  // 5/5 needed for handoff
-  bftToleranceThreshold?: number;     // 2n/3 + 1
-  immutableSealActive?: boolean;      // Lockdown state
+  epochHeight?: number;               
+  merkleRootHash?: string;           
+  quorumSignaturesReceived?: number;  
+  bftToleranceThreshold?: number;     
+  immutableSealActive?: boolean;      
   solarManifoldStatus?: 'UNIFIED' | 'STABLE' | 'DRIFTING';
+
+  // Block 0x09: Expansion Fleet
+  vesselsConstructed?: number;        // Total ship count
+  negativeMassReserveKg?: number;     // Fuel for warp cores
+  quantumIceIntegrity?: number;       // Hull health (0-1)
+  warpFieldStability?: number;        // Metrical variance (0-1)
+  fleetConsensusSync?: boolean;       // BFT sync across mobile nodes
 }
 
 export interface Message {
@@ -161,5 +168,6 @@ export interface Message {
     isInferenceVerification?: boolean;
     isPlanetaryScaling?: boolean;
     isGenesisInitiation?: boolean;
+    isFleetExpansion?: boolean;
   };
 }
