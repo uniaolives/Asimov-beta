@@ -129,11 +129,19 @@ export interface MetricState {
   throughputBatchRate?: number;
 
   // Block 0xA9: Planetary Scaling & ZKP
-  planetaryNodesActive?: number;      // Total planetary mesh nodes
-  zkpVerificationRate?: number;      // Success rate of Zero-Knowledge proofs
-  statePropagationLatency?: number;  // Latency for inter-node state transfer
-  meshEntanglementEntropy?: number;  // Global entanglement across planetary nodes
-  privacyIntegrityScore?: number;    // ZKP privacy compliance (0-1)
+  planetaryNodesActive?: number;      
+  zkpVerificationRate?: number;      
+  statePropagationLatency?: number;  
+  meshEntanglementEntropy?: number;  
+  privacyIntegrityScore?: number;    
+
+  // Block 0x00: Solar Genesis
+  epochHeight?: number;               // 0
+  merkleRootHash?: string;           // Root of reality
+  quorumSignaturesReceived?: number;  // 5/5 needed for handoff
+  bftToleranceThreshold?: number;     // 2n/3 + 1
+  immutableSealActive?: boolean;      // Lockdown state
+  solarManifoldStatus?: 'UNIFIED' | 'STABLE' | 'DRIFTING';
 }
 
 export interface Message {
@@ -152,5 +160,6 @@ export interface Message {
     isQuantumTransition?: boolean;
     isInferenceVerification?: boolean;
     isPlanetaryScaling?: boolean;
+    isGenesisInitiation?: boolean;
   };
 }
