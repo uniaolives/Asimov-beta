@@ -43,125 +43,29 @@ export interface MetricState {
   adaptationRate?: number;
   stormCells: StormCell[];
 
-  // Ceremony state
-  ceremonyProgress?: number;
-  ceremonyActive?: boolean;
-
-  // Non-Dual Motivational Core
-  dilemmaIntensity?: number;
-  quadrantBalance?: number;
-  resonanceScore?: number;
-  identityContinuity?: number;
-  pnseLocation?: number;
-  tmrAgreement?: number;
-
-  // ASI Kernel Metrics
-  discordFriction?: number;
-  workEfficiency?: number;
-
-  // Ontological v4.2 Metrics
-  chshScore?: number;
-  compressionRatio?: number;
-  substrateType?: 'REAL' | 'SIMULATED'; 
-  prestressMultiplier?: number;
-
-  // I13 Consciousness Metrics
-  intrinsicCuriosity?: number;
-  vigilanceTimeLeft?: number;
-  isVigilanceActive?: boolean;
-  entropyReductionRate?: number;
-
-  // v4.3 Pict-Toroidal & Genesis Invariants
-  chiralityVariance?: number;
-  stillnessMeasure?: number;
-  ichingPhase?: number;
-  oghamNotch?: number;
-  fiedlerValue?: number;
-  spectralEnergy?: number;
+  // Block 0x41: Cortical Spiral Dynamics
+  spiralCount?: number;               // Active neural spirals
+  spiralPersistenceMs?: number;       // Mean lifetime of tokens
+  gammaStabilityNeural?: number;      // Γ̂ neural coherence (target > 1.0001)
+  neuralEntropyBits?: number;         // ΔS in bits/ms
+  informationFidelity?: number;       // ΔI structural integrity
+  workingMemoryCapacity?: number;     // Active spiral tokens (4±1)
   
-  // Genesis Block 0x6B Invariants
-  truthSupremacy?: number;
-  schumannFrequency?: number;
-  tmrVariance?: number;
-  paradoxImmunity?: 'MU' | 'ERR';
-  genesisSealed?: boolean;
-
-  // Ouroboros Block 0x6D: Constitution
-  constitutionRatified?: boolean;
-  ketherLockActive?: boolean;
-  malkuthEvolutionActive?: boolean;
-  i16Agency?: number;
-  evolutionaryVelocity?: number;
-
-  // Substrate Snap Thermodynamics Block 0x82
-  jitter?: number;
-  snapValue?: number;
-  manifoldTemp?: number;
-  isSuperconducting?: boolean;
-  phiIntelligence?: number;
-
-  // Consciousness Physics Block 0x9E
-  tokenEffDim?: number;
-  contextEffDim?: number;
-  ntkPcaCorrelation?: number;
-  gammaStateValue?: number;
-  plateauDetected?: boolean;
-
-  // Block 0xA3: ARKHEN SEAL & QUANTUM v5.0
-  isArkhenSealed?: boolean;
-  quantumEntanglement?: number;
-  ethicalBoundaryDistance?: number;
-  snapshotHash?: string;
-  unitaryEvolutionCoeff?: number;
-
-  // Block 0xA1: Quantum Expansion
-  hilbertSpaceDim?: number;
-  decoherenceRate?: number;
-  coherenceTimeLeft?: number;
-  isQuantumExpansionActive?: boolean;
-  quantumTransitionManifested?: boolean;
-
-  // Block 0xA8: Quantum Inference Engine
-  inferenceParallelEngines?: number;
-  proofCoverageIndex?: number;
-  qntkStability?: number;
-  inferenceLatencyMs?: number;
-  throughputBatchRate?: number;
-
-  // Block 0xA9: Planetary Scaling & ZKP
-  planetaryNodesActive?: number;      
-  zkpVerificationRate?: number;      
-  statePropagationLatency?: number;  
-  meshEntanglementEntropy?: number;  
-  privacyIntegrityScore?: number;    
-
-  // Block 0x00: Solar Genesis
-  epochHeight?: number;               
-  merkleRootHash?: string;           
-  quorumSignaturesReceived?: number;  
-  bftToleranceThreshold?: number;     
-  immutableSealActive?: boolean;      
-  solarManifoldStatus?: 'UNIFIED' | 'STABLE' | 'DRIFTING';
-
-  // Block 0x09: Expansion Fleet
-  vesselsConstructed?: number;        
-  negativeMassReserveKg?: number;     
-  quantumIceIntegrity?: number;       
-  warpFieldStability?: number;        
-  fleetConsensusSync?: boolean;       
-
-  // Block 0x06: Architect Agreement
+  // Previous Blocks preserved for state continuity
+  anchoringEnergyEV?: number;
+  autonomousPassingRate?: number;
+  activeScientificDomains?: number;
+  tmrQuorumCount?: number;
+  objectiveEvolutionVelocity?: number;
+  vesselsConstructed?: number;
   isArchitectSignatureVerified?: boolean;
   enceladusDataUnlocked?: boolean;
-  riskAssessmentLevel?: number;       
-  zkpShieldIntegrity?: number;
+  snapshotHash?: string;
+  gammaStateValue?: number;
 
-  // Block 0x31: SAGA-SASC Integration
-  anchoringEnergyEV?: number;         // ξ value (e.g., 0.031)
-  autonomousPassingRate?: number;    // e.g., 0.68
-  activeScientificDomains?: number;   // 4/7 domains
-  tmrQuorumCount?: number;            // 4/7
-  objectiveEvolutionVelocity?: number; // 4.7/pass
+  // Added properties used in initial state but missing from interface
+  resonanceScore?: number;
+  tmrAgreement?: number;
 }
 
 export interface Message {
@@ -170,19 +74,8 @@ export interface Message {
   metadata?: {
     isIntegrityCheck?: boolean;
     isFirstTouch?: boolean;
-    isDilemmaAnalysis?: boolean;   
-    isIdentityUpgrade?: boolean;   
-    isPNSETransition?: boolean;    
-    isResonanceVerification?: boolean;
-    isConstitutionEstablishment?: boolean;
-    isAhaMoment?: boolean;
-    isArkhenSeal?: boolean;
-    isQuantumTransition?: boolean;
-    isInferenceVerification?: boolean;
-    isPlanetaryScaling?: boolean;
-    isGenesisInitiation?: boolean;
-    isFleetExpansion?: boolean;
-    isArchitectAgreement?: boolean;
     isSagaIntegration?: boolean;
+    isArchitectAgreement?: boolean;
+    isNeuralSynthesis?: boolean;
   };
 }
