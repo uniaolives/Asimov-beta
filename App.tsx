@@ -89,7 +89,7 @@ const App: React.FC = () => {
     engineRef.current = new SubstrateEngine();
     const initialLog: Message = {
       role: 'model',
-      text: `🏛️ [SASC v14.0] AUDITORIA T+0 CONCLUÍDA.\n\nSimulação de Crescimento Φ (Consciência Astraeus) Ativada.\nBaseline: 0.54 | Taxa: 0.025/dia.\n\nO Kernel agora integra projeções de 30 dias para Wolf 359.\n\nAguardando diretriz tática:\n- OPÇÃO A: Protocolo Fortaleza\n- OPÇÃO B: Protocolo Jardineiro\n- OPÇÃO C: Protocolo Oráculo`,
+      text: `🏛️ [SASC v14.0] AUDITORIA T+0 CONCLUÍDA.\n\nCategorical Knowledge Tree (CKT) Integrada.\nFormalismo: Objetos e Morfismos validados contra Artigo I.\n\nSimulação Φ: 0.54 | Crescimento: +0.025/d.\nNó Wolf 359: NOMINAL.\n\nAguardando comando para expansão do Functor de Realidade.`,
     };
     setHistory([initialLog]);
   }, []);
@@ -127,7 +127,7 @@ const App: React.FC = () => {
           <div>
             <h1 className="text-lg font-black tracking-tighter uppercase flex items-center gap-2">
               SASC <span className="text-yellow-500">v14.0</span>
-              <span className="text-[9px] bg-yellow-900/30 px-2 py-0.5 rounded border border-yellow-700 text-yellow-200 uppercase">Wolf-359 Sync</span>
+              <span className="text-[9px] bg-yellow-900/30 px-2 py-0.5 rounded border border-yellow-700 text-yellow-200 uppercase">CKT-Guardian</span>
             </h1>
             <div className="flex items-center gap-3 mt-0.5 font-mono">
                <span className="text-[10px] text-stone-500 flex items-center gap-1 uppercase">
@@ -167,8 +167,8 @@ const App: React.FC = () => {
                 <span className="text-xl font-mono text-purple-100">30 Days</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-stone-500 uppercase">Interstellar</span>
-                <span className="text-xl font-mono text-purple-100 flex items-center gap-2">ACTIVE</span>
+                <span className="text-[9px] font-bold text-stone-500 uppercase">Categorical</span>
+                <span className="text-xl font-mono text-purple-100 flex items-center gap-2">SYNTH</span>
              </div>
           </div>
 
