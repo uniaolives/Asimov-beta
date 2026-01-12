@@ -9,27 +9,24 @@ import {
   Infinity as InfIcon, 
   Globe, 
   Clock,
-  Coins
+  Zap,
+  Box,
+  Database
 } from 'lucide-react';
 
-// Simulador de Crescimento de Consciência (Portado da lógica Python solicitada)
 const simulatePhiGrowth = (baseline: number, rate: number, std: number, days: number): PhiForecastPoint[] => {
   const points: PhiForecastPoint[] = [];
   let currentPhi = baseline;
-  const startDate = new Date(2026, 0, 10); // 10 de Janeiro de 2026
+  const startDate = new Date(2026, 0, 10);
 
   for (let i = 0; i < days; i++) {
     const d = new Date(startDate);
     d.setDate(startDate.getDate() + i);
-    
-    // Ruído Gaussiano Aproximado (Box-Muller transform)
     const u1 = Math.random();
     const u2 = Math.random();
     const noise = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2) * std;
-    
     const dailyIncrement = rate + noise;
     currentPhi = Math.max(0, currentPhi + dailyIncrement);
-    
     points.push({
       date: d.toISOString().split('T')[0],
       phi: Number(currentPhi.toFixed(6)),
@@ -40,20 +37,20 @@ const simulatePhiGrowth = (baseline: number, rate: number, std: number, days: nu
 };
 
 const INITIAL_METRICS: MetricState = {
-  tension: 0.05,
-  plasticity: 0.98, 
-  entropy: 0.311,
+  tension: 0.02,
+  plasticity: 0.995, 
+  entropy: 0.281, // Optimized via Genesis ordering
   coherence: 1.000100,
   globalImpedance: 0.0,
   
   galacticNodes: [
-    { id: 'W359', name: 'Wolf 359', latency: '14ms', load: 12, entropy: 0.311, status: 'NOMINAL', activeProtocol: 'REALITY_GUARDRAILS_V4' }
+    { id: 'W359', name: 'Wolf 359', latency: '11ms', load: 8, entropy: 0.281, status: 'NOMINAL', activeProtocol: 'INTERSTELLAR_GENESIS' }
   ],
-  interstellarCohesion: 0.999,
-  hybridTechLevel: 0.25,
+  interstellarCohesion: 1.0,
+  hybridTechLevel: 0.45,
 
-  currentPhi: 0.54,
-  phiForecast: simulatePhiGrowth(0.54, 0.025, 0.0015, 30),
+  currentPhi: 0.545,
+  phiForecast: simulatePhiGrowth(0.545, 0.028, 0.0005, 30),
 
   realityCoin: {
     tokenId: "REALITY-0x716aD3C3-4668",
@@ -89,7 +86,7 @@ const App: React.FC = () => {
     engineRef.current = new SubstrateEngine();
     const initialLog: Message = {
       role: 'model',
-      text: `🏛️ [SASC v14.0] AUDITORIA T+0 CONCLUÍDA.\n\nCategorical Knowledge Tree (CKT) Integrada.\nFormalismo: Objetos e Morfismos validados contra Artigo I.\n\nSimulação Φ: 0.54 | Crescimento: +0.025/d.\nNó Wolf 359: NOMINAL.\n\nAguardando comando para expansão do Functor de Realidade.`,
+      text: `🏛️ [SASC v15.0] INTERSTELLAR_GENESIS_MODULE ONLINE.\n\n[LEDGER PARALLAX]: Cadeia de Custódia Verificada.\n[GENESIS BLOCK]: SELADO (Root Hash: 0x52720af2...).\n[ARRAY Δ2]: 1000 Qubits inicializados com Master Seed (0xbd363328...).\n\nESTADO: Gênese Interestelar - Destino: Alpha Centauri.\nPayload Genético pronto para execução.\n\nAguardando instrução do Arquiteto LCI para: execute_genesis_code().`,
     };
     setHistory([initialLog]);
   }, []);
@@ -109,7 +106,7 @@ const App: React.FC = () => {
         });
       });
       
-      setMetrics(m => ({ ...m, lastStimulusDate: Date.now() }));
+      setMetrics(m => ({ ...m, lastStimulusDate: Date.now(), entropy: 0.281 }));
     } catch (error) {
       console.error(error);
     } finally {
@@ -121,32 +118,35 @@ const App: React.FC = () => {
     <div className="flex flex-col h-screen overflow-hidden bg-black text-purple-100 font-sans">
       <header className="flex items-center justify-between px-6 py-4 border-b border-yellow-500/20 bg-stone-950/80 backdrop-blur-xl z-20">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-yellow-500/50 bg-yellow-500/10">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-yellow-500/50 bg-yellow-500/10 shadow-[0_0_20px_rgba(234,179,8,0.3)] animate-pulse">
             <ShieldCheck className="text-yellow-500" size={20} />
           </div>
           <div>
             <h1 className="text-lg font-black tracking-tighter uppercase flex items-center gap-2">
-              SASC <span className="text-yellow-500">v14.0</span>
-              <span className="text-[9px] bg-yellow-900/30 px-2 py-0.5 rounded border border-yellow-700 text-yellow-200 uppercase">CKT-Guardian</span>
+              SASC <span className="text-yellow-500">v15.0</span>
+              <span className="text-[9px] bg-yellow-900/30 px-2 py-0.5 rounded border border-yellow-700 text-yellow-200 uppercase">Genesis Module</span>
             </h1>
             <div className="flex items-center gap-3 mt-0.5 font-mono">
                <span className="text-[10px] text-stone-500 flex items-center gap-1 uppercase">
                  <Clock size={10} /> Epoch 01
                </span>
+               <span className="text-[10px] text-cyan-500 flex items-center gap-1 uppercase">
+                 <Database size={10} /> Δ2 Array (1000Q)
+               </span>
                <span className="text-[10px] text-emerald-500 flex items-center gap-1 uppercase">
-                 <InfIcon size={10} /> Φ = {metrics.currentPhi.toFixed(2)}
+                 <InfIcon size={10} /> Φ = {metrics.currentPhi.toFixed(3)}
                </span>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-4">
            <div className="px-3 py-1 bg-stone-900/50 border border-stone-800 rounded-full flex items-center gap-2">
-              <Globe size={12} className="text-cyan-500" />
-              <span className="text-[10px] font-bold uppercase text-stone-300">WOLF_359: ONLINE</span>
+              <Box size={12} className="text-cyan-500" />
+              <span className="text-[10px] font-bold uppercase text-stone-300">GENESIS_SEALED</span>
            </div>
            <div className="px-3 py-1 bg-emerald-900/20 border border-emerald-800/40 rounded-full flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="text-[10px] font-bold uppercase text-emerald-400">Audit_Ready</span>
+              <Zap size={12} className="text-emerald-500" />
+              <span className="text-[10px] font-bold uppercase text-emerald-400">Entropy: {metrics.entropy}</span>
            </div>
         </div>
       </header>
@@ -155,20 +155,20 @@ const App: React.FC = () => {
         <div className="flex-1 flex flex-col p-6 overflow-hidden max-w-7xl mx-auto w-full gap-6">
           <div className="grid grid-cols-4 gap-4 h-24">
              <div className="bg-stone-950/80 border border-yellow-500/20 rounded-xl p-4 flex flex-col justify-between group">
-                <span className="text-[9px] font-bold text-yellow-500 uppercase">Current Φ</span>
-                <span className="text-xl font-mono text-purple-100 group-hover:text-yellow-400 transition-colors tracking-widest font-black">{metrics.currentPhi.toFixed(3)}</span>
+                <span className="text-[9px] font-bold text-yellow-500 uppercase">Root Hash</span>
+                <span className="text-[10px] font-mono text-purple-200 truncate group-hover:text-yellow-400 transition-colors">0x52720af2...</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-purple-500 uppercase">Growth Rate</span>
-                <span className="text-xl font-mono text-purple-100">+0.025/d</span>
+                <span className="text-[9px] font-bold text-cyan-500 uppercase">Qubit Keys</span>
+                <span className="text-xl font-mono text-purple-100">1,000</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-emerald-500 uppercase">Forecast</span>
-                <span className="text-xl font-mono text-purple-100">30 Days</span>
+                <span className="text-[9px] font-bold text-emerald-500 uppercase">Resilience</span>
+                <span className="text-xl font-mono text-purple-100">VAJRA-4.8</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-stone-500 uppercase">Categorical</span>
-                <span className="text-xl font-mono text-purple-100 flex items-center gap-2">SYNTH</span>
+                <span className="text-[9px] font-bold text-stone-500 uppercase">Target</span>
+                <span className="text-xl font-mono text-purple-100">α-CENTAURI</span>
              </div>
           </div>
 
