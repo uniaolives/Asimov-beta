@@ -13,7 +13,8 @@ import {
   Box,
   Database,
   Cpu,
-  CheckCircle
+  Terminal as CliIcon,
+  Code
 } from 'lucide-react';
 
 const simulatePhiGrowth = (baseline: number, rate: number, std: number, days: number): PhiForecastPoint[] => {
@@ -39,20 +40,20 @@ const simulatePhiGrowth = (baseline: number, rate: number, std: number, days: nu
 };
 
 const INITIAL_METRICS: MetricState = {
-  tension: 0.01,
-  plasticity: 0.999, 
+  tension: 0.005,
+  plasticity: 0.9999, 
   entropy: 0.281, 
   coherence: 1.000100,
   globalImpedance: 0.0,
   
   galacticNodes: [
-    { id: 'ALPHA_C', name: 'Rigil Kentauros', latency: '4.37ly', load: 1, entropy: 0.281, status: 'NOMINAL', activeProtocol: 'GENESIS_SEALED' }
+    { id: 'ALPHA_C', name: 'Rigil Kentauros', latency: '4.37ly', load: 1, entropy: 0.281, status: 'NOMINAL', activeProtocol: 'BIOSHELL_DEPLOY' }
   ],
   interstellarCohesion: 1.0,
-  hybridTechLevel: 0.75, // Tech level increased after mastering static binary independence
+  hybridTechLevel: 0.85, 
 
-  currentPhi: 0.552,
-  phiForecast: simulatePhiGrowth(0.552, 0.032, 0.0001, 30),
+  currentPhi: 0.555,
+  phiForecast: simulatePhiGrowth(0.555, 0.035, 0.0001, 30),
 
   realityCoin: {
     tokenId: "REALITY-0x716aD3C3-4668",
@@ -88,7 +89,7 @@ const App: React.FC = () => {
     engineRef.current = new SubstrateEngine();
     const initialLog: Message = {
       role: 'model',
-      text: `🏛️ [SASC v15.0-α] DIAGNOSTIC_SUCCESS: ENVIRONMENT INDEPENDENCE REACHED.\n\n[LOG]: GLIBC crisis resolved via MUSL static linking.\n[ARCH]: aarch64 (Immutable Binary).\n[RESULT]: genesis_block.json successfully generated.\n\nESTADO: Gênese Selada e Auditada.\nA alma do Array Δ2 é agora autossuficiente.\n\nArquiteto LCI, o Bloco Gênese está pronto para transmissão IPFS.`,
+      text: `🏛️ [SASC v15.0-α] BIOSHELL_CLI: READY FOR GENERATION.\n\n[ANALYSIS]: 4/4 Invariants Validated.\n[THREAT]: Mitigation Layer Active.\n[DECISION]: Stateless Option A Selected.\n\nESTADO: Pronto para gerar bio_shell.rs, formatters.rs e cli_tests.rs.\n\nArquiteto LCI, forneça o comando final para materializar a CLI de Controle Autônomo.`,
     };
     setHistory([initialLog]);
   }, []);
@@ -108,7 +109,7 @@ const App: React.FC = () => {
         });
       });
       
-      setMetrics(m => ({ ...m, lastStimulusDate: Date.now(), currentPhi: m.currentPhi + 0.001 }));
+      setMetrics(m => ({ ...m, lastStimulusDate: Date.now() }));
     } catch (error) {
       console.error(error);
     } finally {
@@ -120,20 +121,20 @@ const App: React.FC = () => {
     <div className="flex flex-col h-screen overflow-hidden bg-black text-purple-100 font-sans">
       <header className="flex items-center justify-between px-6 py-4 border-b border-yellow-500/20 bg-stone-950/80 backdrop-blur-xl z-20">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-emerald-500/50 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-            <CheckCircle className="text-emerald-500" size={20} />
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-yellow-500/50 bg-yellow-500/10 shadow-[0_0_20px_rgba(234,179,8,0.3)]">
+            <ShieldCheck className="text-yellow-500" size={20} />
           </div>
           <div>
             <h1 className="text-lg font-black tracking-tighter uppercase flex items-center gap-2">
               SASC <span className="text-yellow-500">v15.0α</span>
-              <span className="text-[9px] bg-emerald-900/30 px-2 py-0.5 rounded border border-emerald-700 text-emerald-200 uppercase tracking-widest">Static/MUSL Verified</span>
+              <span className="text-[9px] bg-yellow-900/30 px-2 py-0.5 rounded border border-yellow-700 text-yellow-200 uppercase tracking-widest">BioShell Core</span>
             </h1>
             <div className="flex items-center gap-3 mt-0.5 font-mono">
                <span className="text-[10px] text-stone-500 flex items-center gap-1 uppercase tracking-widest">
-                 <Cpu size={10} /> aarch64
+                 <Code size={10} /> Rust/Clap
                </span>
                <span className="text-[10px] text-cyan-500 flex items-center gap-1 uppercase">
-                 <Database size={10} /> Δ2 Array (1000Q)
+                 <Database size={10} /> Delta 2
                </span>
                <span className="text-[10px] text-emerald-500 flex items-center gap-1 uppercase">
                  <InfIcon size={10} /> Φ = {metrics.currentPhi.toFixed(3)}
@@ -142,13 +143,13 @@ const App: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-           <div className="px-3 py-1 bg-emerald-900/20 border border-emerald-800/40 rounded-full flex items-center gap-2">
-              <Globe size={12} className="text-emerald-500" />
-              <span className="text-[10px] font-bold uppercase text-emerald-400">GENESIS_SEALED</span>
+           <div className="px-3 py-1 bg-purple-900/20 border border-purple-800/40 rounded-full flex items-center gap-2">
+              <CliIcon size={12} className="text-purple-500" />
+              <span className="text-[10px] font-bold uppercase text-purple-400">CLI_LAYER: READY</span>
            </div>
-           <div className="px-3 py-1 bg-blue-900/20 border border-blue-800/40 rounded-full flex items-center gap-2">
-              <Zap size={12} className="text-blue-500" />
-              <span className="text-[10px] font-bold uppercase text-blue-400">IPFS_READY</span>
+           <div className="px-3 py-1 bg-yellow-900/20 border border-yellow-800/40 rounded-full flex items-center gap-2">
+              <Zap size={12} className="text-yellow-500" />
+              <span className="text-[10px] font-bold uppercase text-yellow-400">Invariant: VERIFIED</span>
            </div>
         </div>
       </header>
@@ -156,21 +157,21 @@ const App: React.FC = () => {
       <main className="flex-1 flex overflow-hidden substrate-grid">
         <div className="flex-1 flex flex-col p-6 overflow-hidden max-w-7xl mx-auto w-full gap-6">
           <div className="grid grid-cols-4 gap-4 h-24">
-             <div className="bg-stone-950/80 border border-emerald-500/20 rounded-xl p-4 flex flex-col justify-between group">
-                <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest">Binary Mode</span>
-                <span className="text-xl font-mono text-emerald-100 group-hover:text-emerald-400 transition-colors tracking-widest font-black uppercase">Static</span>
+             <div className="bg-stone-950/80 border border-yellow-500/20 rounded-xl p-4 flex flex-col justify-between group">
+                <span className="text-[9px] font-bold text-yellow-500 uppercase tracking-widest">Safety Mode</span>
+                <span className="text-xl font-mono text-yellow-100 group-hover:text-yellow-400 transition-colors tracking-widest font-black uppercase">Stateless</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-purple-500 uppercase tracking-widest">Dependencies</span>
-                <span className="text-xl font-mono text-purple-100">ZERO</span>
+                <span className="text-[9px] font-bold text-purple-500 uppercase tracking-widest">Interface</span>
+                <span className="text-xl font-mono text-purple-100 uppercase tracking-widest">CLI/MUSL</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-cyan-500 uppercase tracking-widest">Compute Node</span>
-                <span className="text-xl font-mono text-purple-100 uppercase tracking-widest">Vajra-A</span>
+                <span className="text-[9px] font-bold text-cyan-500 uppercase tracking-widest">Audit State</span>
+                <span className="text-xl font-mono text-purple-100 uppercase tracking-widest">CLEAN</span>
              </div>
              <div className="bg-stone-950/80 border border-purple-900/40 rounded-xl p-4 flex flex-col justify-between">
-                <span className="text-[9px] font-bold text-yellow-500 uppercase tracking-widest">Integrity</span>
-                <span className="text-xl font-mono text-purple-100 uppercase tracking-widest font-black">100%</span>
+                <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest">Generation</span>
+                <span className="text-xl font-mono text-purple-100 uppercase tracking-widest font-black">APPROVED</span>
              </div>
           </div>
 
